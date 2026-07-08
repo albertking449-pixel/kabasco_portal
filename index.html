@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kabalega Secondary School</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#17281B;
+    --ink2:#233B29;
+    --ink3:#2E4E36;
+    --paper:#EFEAD8;
+    --paper2:#F8F5EA;
+    --gold:#C9962C;
+    --gold-dark:#A67623;
+    --maroon:#7A1F2B;
+    --text:#201C12;
+    --text-soft:#5B5646;
+    --line:#D8CFB0;
+    --success:#3C6E47;
+    --danger:#8C2A2A;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{margin:0;color:var(--text);font-family:'Work Sans',sans-serif;font-size:14.5px;line-height:1.5;
+    min-height:100vh;
+    background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7ysEkl3wWHojtCDtCD5CnLkqTDdJJvOv_-VtBJ3LwLK4NoUnhATM5mitF&s=10');
+    background-size:cover;
+    background-position:center center;
+    opacity: 0.9;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    background-color:var(--paper);
+  }
+  h1,h2,h3,.display{font-family:'Zilla Slab',serif;letter-spacing:.2px;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  button{font-family:inherit;cursor:pointer;}
+  input,select,textarea{font-family:inherit;font-size:14px;}
+  a{color:inherit;}
+  ::selection{background:var(--gold);color:var(--ink);}
+
+  /* ---------- LOGIN (full-bleed, sits on top of the body background photo) ---------- */
+  .login-wrap{min-height:100vh;width:100%;display:flex;align-items:stretch;justify-content:center;padding:0;
+    background:linear-gradient(180deg, rgba(23,40,27,.30), rgba(23,40,27,.55));}
+  .id-card{width:100%;max-width:none;min-height:100vh;background:transparent;border:none;border-radius:0;display:grid;grid-template-columns:1fr 1.15fr;overflow:hidden;box-shadow:none;}
+  .id-left{background:linear-gradient(180deg, rgba(23,40,27,.45), rgba(23,40,27,.82));color:var(--paper2);padding:56px 48px;display:flex;flex-direction:column;justify-content:space-between;position:relative;}
+  .id-left::after{content:"";position:absolute;right:0;top:0;bottom:0;width:14px;background:repeating-linear-gradient(180deg,var(--gold) 0 8px, transparent 8px 16px);opacity:.55;}
+  .crest{width:84px;height:84px;border-radius:50%;border:2.5px solid var(--gold);display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:22px;}
+  .crest span{font-family:'Zilla Slab',serif;font-weight:700;font-size:22px;color:var(--gold);}
+  .crest-ring{position:absolute;inset:-8px;border:1px dashed rgba(201,150,44,.45);border-radius:50%;}
+  .eyebrow{text-transform:uppercase;letter-spacing:2.5px;font-size:11px;color:var(--gold);font-weight:600;margin-bottom:8px;}
+  .id-left h1{font-size:34px;margin:0 0 10px;line-height:1.15;}
+  .id-left p{color:#E7EBE4;font-size:14px;max-width:36ch;}
+  .stamp{align-self:flex-start;border:1.5px solid var(--gold);color:var(--gold);padding:6px 12px;border-radius:3px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;transform:rotate(-4deg);font-weight:600;}
+  .id-right{padding:56px 64px;display:flex;flex-direction:column;justify-content:center;background:rgba(248,245,234,.95);backdrop-filter:blur(6px);overflow-y:auto;max-height:100vh;}
+  .role-tabs{display:flex;gap:6px;margin-bottom:22px;border-bottom:1px solid var(--line);}
+  .role-tab{flex:1;text-align:center;padding:10px 4px;font-size:13px;font-weight:600;color:var(--text-soft);border-bottom:2.5px solid transparent;letter-spacing:.3px;}
+  .role-tab.active{color:var(--ink);border-color:var(--gold);}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:1px;color:var(--text-soft);margin-bottom:6px;font-weight:600;}
+  .field select, .field input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--text);}
+  .btn{border:none;border-radius:4px;padding:11px 18px;font-weight:600;font-size:13.5px;letter-spacing:.3px;display:inline-flex;align-items:center;gap:8px;justify-content:center;transition:transform .08s ease;}
+  .btn:active{transform:scale(.98);}
+  .btn-primary{background:var(--ink);color:var(--paper2);}
+  .btn-primary:hover{background:#0f1c12;}
+  .btn-gold{background:var(--gold);color:var(--ink);}
+  .btn-gold:hover{background:var(--gold-dark);}
+  .btn-ghost{background:transparent;border:1px solid var(--line);color:var(--text);}
+  .btn-danger{background:var(--danger);color:#fff;}
+  .btn-sm{padding:7px 12px;font-size:12.5px;}
+  .hint-box{margin-top:18px;background:#fff;border:1px dashed var(--line);border-radius:4px;padding:12px 14px;font-size:12px;color:var(--text-soft);}
+  .hint-box b{color:var(--text);}
+  @media(max-width:840px){
+    .id-card{grid-template-columns:1fr;}
+    .id-left{padding:36px 28px;}
+    .id-right{padding:36px 28px;max-height:none;}
+  }
+
+  /* ---------- SHELL ---------- */
+  .shell{display:flex;min-height:100vh;background:var(--paper);}
+  .sidebar{width:242px;background:var(--ink);color:var(--paper2);flex-shrink:0;display:flex;flex-direction:column;padding:22px 0;}
+  .side-brand{padding:0 20px 20px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+  .side-brand .mini-crest{width:34px;height:34px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Zilla Slab',serif;font-weight:700;color:var(--gold);font-size:13px;flex-shrink:0;}
+  .side-brand div b{display:block;font-family:'Zilla Slab',serif;font-size:15px;}
+  .side-brand div span{font-size:10.5px;color:#9fb0a3;letter-spacing:1px;text-transform:uppercase;}
+  .nav-group{padding:0 12px;margin-bottom:6px;}
+  .nav-label{font-size:10.5px;text-transform:uppercase;letter-spacing:1.5px;color:#7f9284;padding:12px 10px 6px;}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:4px;font-size:13.5px;color:#D7DED9;cursor:pointer;margin-bottom:2px;font-weight:500;}
+  .nav-item:hover{background:rgba(255,255,255,.06);}
+  .nav-item.active{background:var(--gold);color:var(--ink);font-weight:600;}
+  .nav-dot{width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.6;flex-shrink:0;}
+  .side-foot{margin-top:auto;padding:16px 20px 0;border-top:1px solid rgba(255,255,255,.08);}
+  .user-chip{display:flex;align-items:center;gap:9px;margin-bottom:10px;}
+  .avatar{width:32px;height:32px;border-radius:50%;background:var(--ink3);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12.5px;font-family:'Zilla Slab',serif;flex-shrink:0;}
+  .user-chip div span{display:block;}
+  .user-chip .uname{font-size:13px;font-weight:600;}
+  .user-chip .urole{font-size:10.5px;color:#9fb0a3;text-transform:uppercase;letter-spacing:.6px;}
+
+  .main{flex:1;display:flex;flex-direction:column;min-width:0;}
+  .topbar{height:60px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:var(--paper2);}
+  .topbar h2{margin:0;font-size:19px;}
+  .topbar .breadcrumb{font-size:11px;color:var(--text-soft);text-transform:uppercase;letter-spacing:1px;}
+  .content{padding:28px;overflow-y:auto;}
+
+  .grid{display:grid;gap:16px;}
+  .g4{grid-template-columns:repeat(4,1fr);}
+  .g3{grid-template-columns:repeat(3,1fr);}
+  .g2{grid-template-columns:repeat(2,1fr);}
+  @media(max-width:1000px){.g4{grid-template-columns:repeat(2,1fr);}.g3{grid-template-columns:repeat(2,1fr);}}
+
+  .card{background:var(--paper2);border:1px solid var(--line);border-radius:6px;padding:18px 20px;}
+  .stat-card{background:var(--paper2);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:4px;padding:16px 18px;}
+  .stat-card .label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--text-soft);font-weight:600;margin-bottom:8px;}
+  .stat-card .value{font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:600;color:var(--ink);}
+  .stat-card .sub{font-size:11.5px;color:var(--text-soft);margin-top:4px;}
+
+  .panel-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .panel-title h3{margin:0;font-size:16.5px;}
+
+  table{width:100%;border-collapse:collapse;}
+  th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:1px;color:var(--paper2);background:var(--ink2);padding:10px 12px;font-weight:600;}
+  th:first-child{border-radius:4px 0 0 4px;} th:last-child{border-radius:0 4px 4px 0;}
+  td{padding:10px 12px;border-bottom:1px dotted var(--line);font-size:13.5px;}
+  tr:last-child td{border-bottom:none;}
+  .tag{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:.3px;}
+  .tag-open{background:#F3E3C2;color:#7A5A12;}
+  .tag-progress{background:#DCE7E0;color:var(--success);}
+  .tag-resolved{background:#DDEBDF;color:var(--success);}
+  .tag-maroon{background:#F1DCDC;color:var(--maroon);}
+
+  .badge-grade{font-family:'IBM Plex Mono',monospace;font-weight:600;padding:2px 8px;border-radius:3px;background:var(--ink);color:var(--gold);font-size:12px;}
+
+  .form-row{display:grid;gap:12px;margin-bottom:12px;}
+  .form-row.two{grid-template-columns:1fr 1fr;}
+  .form-row.three{grid-template-columns:1fr 1fr 1fr;}
+  label.f{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.8px;color:var(--text-soft);margin-bottom:5px;font-weight:600;}
+  .f input,.f select,.f textarea{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:4px;background:#fff;}
+  .f textarea{min-height:70px;resize:vertical;}
+
+  .chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 200px);border:1px solid var(--line);border-radius:6px;background:var(--paper2);}
+  .chat-head{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;}
+  .chat-body{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:10px;}
+  .msg{max-width:70%;padding:9px 13px;border-radius:8px;font-size:13.5px;}
+  .msg .who{font-size:10.5px;font-weight:700;letter-spacing:.4px;color:var(--gold-dark);margin-bottom:2px;text-transform:uppercase;}
+  .msg.me{align-self:flex-end;background:var(--ink);color:var(--paper2);border-bottom-right-radius:2px;}
+  .msg.me .who{color:var(--gold);}
+  .msg.other{align-self:flex-start;background:#fff;border:1px solid var(--line);border-bottom-left-radius:2px;}
+  .msg .time{font-size:10px;opacity:.6;margin-top:3px;}
+  .chat-input{display:flex;gap:10px;padding:14px 18px;border-top:1px solid var(--line);}
+  .chat-input input{flex:1;padding:10px 13px;border:1px solid var(--line);border-radius:20px;}
+
+  .empty{padding:40px 20px;text-align:center;color:var(--text-soft);}
+  .empty .big{font-size:34px;margin-bottom:8px;}
+
+  .pill-list{display:flex;flex-wrap:wrap;gap:6px;}
+  .pill{background:var(--paper);border:1px solid var(--line);padding:4px 10px;border-radius:20px;font-size:11.5px;color:var(--text-soft);}
+
+  .qcard{border:1px solid var(--line);border-radius:6px;padding:16px 18px;margin-bottom:12px;background:#fff;}
+  .qopt{display:flex;align-items:center;gap:9px;padding:8px 10px;border:1px solid var(--line);border-radius:4px;margin-bottom:7px;cursor:pointer;font-size:13.5px;}
+  .qopt:hover{border-color:var(--gold);}
+  .qopt.picked{border-color:var(--gold);background:#FBF3E1;}
+
+  .progress-track{height:8px;border-radius:20px;background:var(--line);overflow:hidden;}
+  .progress-fill{height:100%;background:var(--gold);}
+
+  .vote-card{border:1px solid var(--line);border-radius:6px;padding:16px;background:#fff;}
+  .cand-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px dotted var(--line);}
+  .cand-row:last-child{border-bottom:none;}
+
+  .small-note{font-size:11.5px;color:var(--text-soft);}
+</style>
+</head>
+<body>
+    <h1 style="position:absolute;left:-9999px;">KABALEGA SECONDARY SCHOOL</h1>
+<div id="app"></div>
+
+<script>
+/* ===================== DATA ===================== */
+const SUBJECTS = ["English Language","Mathematics","Physics","Chemistry","Biology","Geography","History",
+"Christian Religious Education (CRE)","Islamic Religious Education (IRE)","Kiswahili","Literature in English",
+"Agriculture","Commerce","Computer Studies / ICT","Fine Art","Physical Education","Luganda",
+"Entrepreneurship Education","Technology & Design","Music, Dance & Drama","Home Economics",
+"Nutrition & Food Technology","French","General Paper","Economics","Technical Drawing"];
+
+const CLASSES = ["S1","S2","S3","S4","S5","S6"];
+
+let uidc = 1000;
+const uid = (p)=> p + "-" + (uidc++);
+
+const STATE = {
+  session: null, // {role,id}
+  page: "dashboard",
+  chatGroup: null,
+  activeTest: null,
+  students: [
+
+  ],
+  teachers: [
+   ],
+  admins: [ {id:"adm-1", name:"Albert", pass:"1123"} ],
+
+  feesStructure: {S1:450000,S2:450000,S3:480000,S4:520000,S5:600000,S6:600000}, // per term UGX
+  payments: [],
+
+  results: [
+    {id:uid("res"), studentId:"stu-4", subject:"Mathematics", term:"Term 2", score:78, type:"Exam"},
+    {id:uid("res"), studentId:"stu-4", subject:"Physics", term:"Term 2", score:64, type:"Exam"},
+    {id:uid("res"), studentId:"stu-4", subject:"History", term:"Term 2", score:71, type:"Exam"},
+    {id:uid("res"), studentId:"stu-6", subject:"Biology", term:"Term 2", score:88, type:"Exam"},
+    {id:uid("res"), studentId:"stu-6", subject:"Chemistry", term:"Term 2", score:59, type:"Exam"},
+  ],
+
+  tests: [],
+  submissions: [],
+
+  notes: [],
+
+  issues: [],
+
+  voting: {
+    positions: [],
+    votes: {}, // "posId|candId" -> count
+    ballots: {} // "studentId|posId" -> candId
+  },
+
+  groups: {
+    S1:{name:"S1 Class Chat", messages:[]},
+    S2:{name:"S2 Class Chat", messages:[]},
+    S3:{name:"S3 Class Chat", messages:[]},
+    S4:{name:"S4 Class Chat", messages:[]},
+    S5:{name:"S5 Class Chat", messages:[]},
+    S6:{name:"S6 Class Chat", messages:[]},
+    teachers:{name:"Teachers' Room", messages:[]},
+  },
+};
+
+
+const DEFAULT_STATE = JSON.parse(JSON.stringify(STATE));
+
+/* ===================== HELPERS ===================== */
+const esc = (s)=> String(s??"").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ugx = (n)=> "UGX " + Number(n).toLocaleString();
+const grade = (score)=> score>=80?"A":score>=70?"B":score>=60?"C":score>=50?"D":score>=40?"E":"F";
+const initials = (name)=> name.split(" ").map(w=>w[0]).slice(0,2).join("").toUpperCase();
+const today = ()=> new Date().toISOString().slice(0,10);
+const nowTime = ()=> new Date().toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
+
+function findStudent(id){ return STATE.students.find(s=>s.id===id); }
+function findTeacher(id){ return STATE.teachers.find(t=>t.id===id); }
+function studentBalance(s){
+  const total = STATE.feesStructure[s.cls] || 0;
+  const paid = STATE.payments.filter(p=>p.studentId===s.id).reduce((a,b)=>a+b.amount,0);
+  return {total, paid, balance: total-paid};
+}
+function currentUser(){
+  if(!STATE.session) return null;
+  const {role,id} = STATE.session;
+  if(role==="student") return findStudent(id);
+  if(role==="teacher") return findTeacher(id);
+  if(role==="admin") return STATE.admins.find(a=>a.id===id);
+}
+
+function render(){
+  const app = document.getElementById("app");
+  app.innerHTML = STATE.session ? renderShell() : renderLogin();
+}
+
+const API_BASE = "http://localhost:4000";
+
+const STORAGE_KEY = "kabalega-portal-data";
+let storageAvailable = true;
+
+function snapshotForStorage(){
+  // Only persist real school data — not per-tab UI state like current page or in-progress test.
+  const {session, page, chatGroup, activeTest, ...persisted} = STATE;
+  return persisted;
+}
+
+async function persist(){
+  const snapshot = snapshotForStorage();
+  if(API_BASE){
+    try{
+      await fetch(API_BASE + "/api/state", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify(snapshot)
+      });
+    }catch(e){
+      console.error("Could not save to your MySQL-backed API:", e);
+    }
+    return;
+  }
+  if(!storageAvailable) return;
+  try{
+    await window.storage.set(STORAGE_KEY, JSON.stringify(snapshot), true);
+  }catch(e){
+    console.error("Could not save to shared portal storage:", e);
+  }
+}
+
+async function loadFromStorage(){
+  if(API_BASE){
+    try{
+      const res = await fetch(API_BASE + "/api/state");
+      if(res.ok){
+        const data = await res.json();
+        if(data && Object.keys(data).length){ Object.assign(STATE, data); return; }
+      }
+      await persist(); // empty row in MySQL yet — seed it with the file's defaults
+    }catch(e){
+      console.error("Could not reach your MySQL-backed API, falling back to built-in storage:", e);
+    }
+    return;
+  }
+  try{
+    if(!window.storage){ storageAvailable = false; return; }
+    const res = await window.storage.get(STORAGE_KEY, true);
+    if(res && res.value){
+      const data = JSON.parse(res.value);
+      Object.assign(STATE, data);
+    } else {
+      await persist(); // first run: seed shared storage with the starter dataset
+    }
+  }catch(e){
+    try{ await persist(); }catch(e2){ storageAvailable = false; }
+  }
+}
+async function boot(){
+  const app = document.getElementById("app");
+  app.innerHTML = `<div class="login-wrap"><div class="small-note" style="font-size:14px;color:#fff;">Loading Kabalega portal…</div></div>`;
+  await loadFromStorage();
+  render();
+}
+
+/* ===================== LOGIN / REGISTRATION ===================== */
+let loginRole = "student";
+let loginMode = "login"; // "login" | "registerStudent" | "registerTeacher"
+
+function renderLogin(){
+  const body = loginMode==="registerStudent" ? renderStudentRegisterForm()
+             : loginMode==="registerTeacher" ? renderTeacherRegisterForm()
+             : renderLoginForm();
+  return `
+  <div class="login-wrap">
+    <div class="id-card">
+      <div class="id-left">
+        <div>
+          <div class="crest"><div class="crest-ring"></div><span>Kabasco</span></div>
+          <div class="eyebrow">Kabasco. Online Portal</div>
+          <h1>KABALEGA <br>SECONDARY SCHOOL</h1>
+          <p>Make it easy for everyone to access their school information anytime, anywhere.
+            </p>
+        </div>
+        <div class="stamp">Masindi · Bunyoro . Uganda<br>
+          i learn to serve</br></div>
+      </div>
+      <div class="id-right">
+        <div class="role-tabs">
+          ${["student","teacher","admin"].map(r=>`<div class="role-tab ${r===loginRole?'active':''}" onclick="loginRole='${r}';loginMode='login';render()">${r==="student"?"Student":r==="teacher"?"Teacher":"Admin"}</div>`).join("")}
+        </div>
+        ${body}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderLoginForm(){
+  const roster = loginRole==="student" ? STATE.students : loginRole==="teacher" ? STATE.teachers : STATE.admins;
+  const roleLabel = {student:"Student", teacher:"Teacher", admin:"Administrator"}[loginRole];
+  return `
+    <div class="field">
+      <label>${roleLabel} Account</label>
+      <select id="loginUser">
+        ${roster.length===0? `<option value="">— none registered yet —</option>` : roster.map(u=>`<option value="${u.id}">${esc(u.name)}${u.cls?" — "+u.cls:""}</option>`).join("")}
+      </select>
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input id="loginPass" type="password" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="btn btn-primary" style="width:100%;padding:12px;margin-top:6px;" onclick="doLogin()">Sign in to portal →</button>
+    ${loginRole!=="admin" ? `
+    <div style="text-align:center;margin-top:14px;font-size:12.5px;color:var(--text-soft);">
+      New ${loginRole}? <span style="color:var(--gold-dark);font-weight:600;cursor:pointer;text-decoration:underline;" onclick="loginMode='register${loginRole==='student'?'Student':'Teacher'}';render()">Create an account</span>
+    </div>` : `
+    <div class="hint-box">
+      <b>Administrator access</b> is provisioned by the school.
+    </div>`}
+    
+  `;
+}
+
+function renderStudentRegisterForm(){
+  return `
+    <div class="field"><label>Full name</label><input id="regName" placeholder="e.g. M. Albert"></div>
+    <div class="form-row two" style="margin-bottom:14px;">
+      <div class="f" style="margin-bottom:0;"><label>Class</label><select id="regClass">${CLASSES.map(c=>`<option>${c}</option>`).join("")}</select></div>
+      <div class="f" style="margin-bottom:0;"><label>Admission No.</label><input id="regAdm" placeholder="e.g. A001"></div>
+    </div>
+    <div class="field"><label>Choose a password</label><input id="regPass" type="password" placeholder="At least 4 characters"></div>
+    <div class="field"><label>Confirm password</label><input id="regPass2" type="password" placeholder="Re-enter password"></div>
+    <button class="btn btn-gold" style="width:100%;padding:12px;margin-top:6px;" onclick="doRegisterStudent()">Create my student account →</button>
+    <div style="text-align:center;margin-top:14px;font-size:12.5px;color:var(--text-soft);">
+      Already registered? <span style="color:var(--gold-dark);font-weight:600;cursor:pointer;text-decoration:underline;" onclick="loginMode='login';render()">Sign in instead</span>
+    </div>
+  `;
+}
+
+function renderTeacherRegisterForm(){
+  return `
+    <div class="field"><label>Full name</label><input id="regTName" placeholder="e.g. Mr. Albert"></div>
+    <div class="field">
+      <label>Subjects you teach</label>
+      <select id="regTSubjects" multiple size="5" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:4px;background:#fff;">
+        ${SUBJECTS.map(sub=>`<option value="${esc(sub)}">${esc(sub)}</option>`).join("")}
+      </select>
+      <div class="small-note" style="margin-top:4px;">Hold Ctrl / Cmd to select more than one.</div>
+    </div>
+    <div class="field"><label>Classes you teach (comma-separated)</label><input id="regTClasses" placeholder="e.g. S1, S2"></div>
+    <div class="field"><label>Choose a password</label><input id="regTPass" type="password" placeholder="At least 4 characters"></div>
+    <div class="field"><label>Confirm password</label><input id="regTPass2" type="password" placeholder="Re-enter password"></div>
+    <button class="btn btn-gold" style="width:100%;padding:12px;margin-top:6px;" onclick="doRegisterTeacher()">Create my teacher account →</button>
+    <div style="text-align:center;margin-top:14px;font-size:12.5px;color:var(--text-soft);">
+      Already registered? <span style="color:var(--gold-dark);font-weight:600;cursor:pointer;text-decoration:underline;" onclick="loginMode='login';render()">Sign in instead</span>
+    </div>
+  `;
+}
+
+function doLogin(){
+  const id = document.getElementById("loginUser").value;
+  const pass = document.getElementById("loginPass").value;
+  const roster = loginRole==="student" ? STATE.students : loginRole==="teacher" ? STATE.teachers : STATE.admins;
+  const u = roster.find(x=>x.id===id);
+  if(!u){ alert("That account couldn't be found. If you just created it on another device, wait a moment for it to sync and try again."); return; }
+  if(u.pass !== pass){ alert("Incorrect password."); return; }
+  STATE.session = {role:loginRole, id:u.id};
+  STATE.page = "dashboard";
+  render();
+}
+
+async function doRegisterStudent(){
+  const name = document.getElementById("regName").value.trim();
+  const cls = document.getElementById("regClass").value;
+  const adm = document.getElementById("regAdm").value.trim();
+  const pass = document.getElementById("regPass").value;
+  const pass2 = document.getElementById("regPass2").value;
+  if(!name || !adm){ alert("Enter your full name and admission number."); return; }
+  if(pass.length<4){ alert("Choose a password with at least 4 characters."); return; }
+  if(pass!==pass2){ alert("Passwords do not match."); return; }
+  if(STATE.students.some(s=>s.adm.toLowerCase()===adm.toLowerCase())){ alert("That admission number is already registered. Please sign in instead, or contact the school office."); return; }
+  const student = {id:uid("stu"), name, cls, adm, pass};
+  STATE.students.push(student);
+  await persist();
+  STATE.session = {role:"student", id:student.id};
+  STATE.page = "dashboard";
+  loginMode = "login";
+  render();
+}
+
+async function doRegisterTeacher(){
+  const name = document.getElementById("regTName").value.trim();
+  const subjSelect = document.getElementById("regTSubjects");
+  const subjects = Array.from(subjSelect.selectedOptions).map(o=>o.value);
+  const classes = document.getElementById("regTClasses").value.split(",").map(s=>s.trim()).filter(Boolean);
+  const pass = document.getElementById("regTPass").value;
+  const pass2 = document.getElementById("regTPass2").value;
+  if(!name || subjects.length===0 || classes.length===0){ alert("Enter your name, at least one subject and one class."); return; }
+  if(pass.length<4){ alert("Choose a password with at least 4 characters."); return; }
+  if(pass!==pass2){ alert("Passwords do not match."); return; }
+  if(STATE.teachers.some(t=>t.name.toLowerCase()===name.toLowerCase())){ alert("A teacher with that name is already registered. Please sign in instead, or contact the administrator."); return; }
+  const teacher = {id:uid("tch"), name, subjects, classes, pass};
+  STATE.teachers.push(teacher);
+  await persist();
+  STATE.session = {role:"teacher", id:teacher.id};
+  STATE.page = "dashboard";
+  loginMode = "login";
+  render();
+}
+
+function logout(){ STATE.session=null; loginMode="login"; render(); }
+
+/* ===================== SHELL / NAV ===================== */
+function navFor(role){
+  if(role==="student") return [
+    {group:"Overview", items:[["dashboard","Dashboard"]]},
+    {group:"Academics", items:[["results","My Results"],["tests","Online Tests"],["notes","Class Notes"]]},
+    {group:"School Life", items:[["fees","Fees Balance"],["voting","E-Voting"],["groups","Class Chat"],["issues","Report an Issue"]]},
+    {group:"Account", items:[["settings","Settings"]]},
+  ];
+  if(role==="teacher") return [
+    {group:"Overview", items:[["dashboard","Dashboard"]]},
+    {group:"Teaching", items:[["resultsEntry","Enter Results"],["tests","Manage Tests"],["notes","Upload Notes"]]},
+    {group:"School Life", items:[["groups","Teachers' Room"],["issues","Report an Issue"]]},
+    {group:"Account", items:[["settings","Settings"]]},
+  ];
+  return [
+    {group:"Overview", items:[["dashboard","Dashboard"]]},
+    {group:"Administration", items:[["students","Students"],["teachers","Teachers"],["fees","Fees & Payments"]]},
+    {group:"Engagement", items:[["voting","E-Voting"],["issues","Issue Reports"],["groups","All Groups"]]},
+    {group:"Account", items:[["settings","Settings"]]},
+  ];
+}
+function renderShell(){
+  const {role} = STATE.session;
+  const u = currentUser();
+  const nav = navFor(role);
+  return `
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="side-brand">
+        <div class="mini-crest">KS</div>
+        <div><b>Kabalega S.S.</b><span>Online Portal</span></div>
+      </div>
+      ${nav.map(g=>`
+        <div class="nav-group">
+          <div class="nav-label">${g.group}</div>
+          ${g.items.map(([key,label])=>`
+            <div class="nav-item ${STATE.page===key?'active':''}" onclick="STATE.page='${key}';STATE.chatGroup=null;STATE.activeTest=null;render()">
+              <span class="nav-dot"></span>${label}
+            </div>`).join("")}
+        </div>`).join("")}
+      <div class="side-foot">
+        <div class="user-chip">
+          <div class="avatar">${initials(u.name)}</div>
+          <div><span class="uname">${esc(u.name)}</span><span class="urole">${role}${u.cls?" · "+u.cls:""}</span></div>
+        </div>
+        <button class="btn btn-ghost btn-sm" style="width:100%;color:#D7DED9;border-color:rgba(255,255,255,.2);" onclick="logout()">Sign out</button>
+      </div>
+    </aside>
+    <div class="main">
+      <div class="topbar">
+        <div><div class="breadcrumb">${role} portal</div><h2>${pageTitle()}</h2></div>
+        <div class="small-note">${new Date().toLocaleDateString(undefined,{weekday:'long', year:'numeric', month:'long', day:'numeric'})}</div>
+      </div>
+      <div class="content">${renderPage()}</div>
+    </div>
+  </div>`;
+}
+function pageTitle(){
+  const map = {dashboard:"Dashboard", fees:"Fees", results:"My Results", resultsEntry:"Enter Results",
+    tests:"Tests & Exams", notes:"Notes", voting:"E-Voting", groups:"Chat Groups", issues:"Report an Issue",
+    students:"Manage Students", teachers:"Manage Teachers", settings:"Settings"};
+  return map[STATE.page] || "Dashboard";
+}
+function renderPage(){
+  const role = STATE.session.role;
+  const p = STATE.page;
+  if(p==="dashboard") return role==="student"?studentDashboard():role==="teacher"?teacherDashboard():adminDashboard();
+  if(p==="fees") return role==="admin"?adminFees():studentFees();
+  if(p==="results") return studentResults();
+  if(p==="resultsEntry") return teacherResultsEntry();
+  if(p==="tests") return role==="teacher"?teacherTests():studentTests();
+  if(p==="notes") return role==="teacher"?teacherNotes():studentNotes();
+  if(p==="voting") return votingPage();
+  if(p==="groups") return groupsPage();
+  if(p==="issues") return issuesPage();
+  if(p==="students") return adminStudents();
+  if(p==="teachers") return adminTeachers();
+  if(p==="settings") return settingsPage();
+  return "<div class='empty'>Page not found.</div>";
+}
+
+/* ===================== DASHBOARDS ===================== */
+function studentDashboard(){
+  const s = currentUser();
+  const {total,paid,balance} = studentBalance(s);
+  const myResults = STATE.results.filter(r=>r.studentId===s.id);
+  const avg = myResults.length ? Math.round(myResults.reduce((a,b)=>a+b.score,0)/myResults.length) : null;
+  const myTests = STATE.tests.filter(t=>t.cls===s.cls);
+  const doneIds = STATE.submissions.filter(x=>x.studentId===s.id).map(x=>x.testId);
+  const pending = myTests.filter(t=>!doneIds.includes(t.id)).length;
+  return `
+  <div class="grid g4" style="margin-bottom:22px;">
+    <div class="stat-card"><div class="label">Class</div><div class="value">${s.cls}</div><div class="sub">Adm No. ${esc(s.adm)}</div></div>
+    <div class="stat-card"><div class="label">Fees Balance</div><div class="value">${ugx(balance)}</div><div class="sub">of ${ugx(total)} this term</div></div>
+    <div class="stat-card"><div class="label">Average Score</div><div class="value">${avg===null?"—":avg+"%"}</div><div class="sub">${avg===null?"No results yet":"Grade "+grade(avg)}</div></div>
+    <div class="stat-card"><div class="label">Pending Tests</div><div class="value">${pending}</div><div class="sub">assigned to ${s.cls}</div></div>
+  </div>
+  <div class="grid g2">
+    <div class="card">
+      <div class="panel-title"><h3>Recent results</h3><span class="small-note" onclick="STATE.page='results';render()" style="cursor:pointer;text-decoration:underline;">view all</span></div>
+      ${myResults.length? `<table><thead><tr><th>Subject</th><th>Term</th><th>Score</th><th>Grade</th></tr></thead><tbody>
+        ${myResults.slice(0,4).map(r=>`<tr><td>${esc(r.subject)}</td><td>${r.term}</td><td class="mono">${r.score}%</td><td><span class="badge-grade">${grade(r.score)}</span></td></tr>`).join("")}
+      </tbody></table>` : `<div class="empty"><div class="big">📄</div>No results published yet.</div>`}
+    </div>
+    <div class="card">
+      <div class="panel-title"><h3>Notice board</h3></div>
+      <ul style="margin:0;padding-left:18px;font-size:13.5px;">
+        <li style="margin-bottom:8px;">Term 2 fees balance clearance deadline: end of month.</li>
+        <li style="margin-bottom:8px;">Prefect elections are open on the E-Voting page.</li>
+        <li style="margin-bottom:8px;">Check the Notes page for subject revision material.</li>
+      </ul>
+    </div>
+  </div>`;
+}
+function teacherDashboard(){
+  const t = currentUser();
+  const myNotes = STATE.notes.filter(n=>n.teacherId===t.id).length;
+  const myTests = STATE.tests.filter(x=>x.teacherId===t.id).length;
+  const myClasses = t.classes.length;
+  const subCount = t.subjects.length;
+  return `
+  <div class="grid g4" style="margin-bottom:22px;">
+    <div class="stat-card"><div class="label">Subjects</div><div class="value">${subCount}</div><div class="sub">${esc(t.subjects.join(", "))}</div></div>
+    <div class="stat-card"><div class="label">Classes</div><div class="value">${myClasses}</div><div class="sub">${esc(t.classes.join(", "))}</div></div>
+    <div class="stat-card"><div class="label">Tests Created</div><div class="value">${myTests}</div><div class="sub">online tests &amp; quizzes</div></div>
+    <div class="stat-card"><div class="label">Notes Uploaded</div><div class="value">${myNotes}</div><div class="sub">shared with students</div></div>
+  </div>
+  <div class="card">
+    <div class="panel-title"><h3>Quick actions</h3></div>
+    <div class="pill-list">
+      <span class="pill" style="cursor:pointer;" onclick="STATE.page='resultsEntry';render()">📊 Enter results</span>
+      <span class="pill" style="cursor:pointer;" onclick="STATE.page='tests';render()">📝 Create a test</span>
+      <span class="pill" style="cursor:pointer;" onclick="STATE.page='notes';render()">📚 Upload notes</span>
+      <span class="pill" style="cursor:pointer;" onclick="STATE.page='groups';render()">💬 Teachers' Room</span>
+    </div>
+  </div>`;
+}
+function adminDashboard(){
+  const totalStudents = STATE.students.length;
+  const totalTeachers = STATE.teachers.length;
+  const collected = STATE.payments.reduce((a,b)=>a+b.amount,0);
+  const openIssues = STATE.issues.filter(i=>i.status!=="Resolved").length;
+  return `
+  <div class="grid g4" style="margin-bottom:22px;">
+    <div class="stat-card"><div class="label">Students</div><div class="value">${totalStudents}</div><div class="sub">S1 – S6</div></div>
+    <div class="stat-card"><div class="label">Teachers</div><div class="value">${totalTeachers}</div><div class="sub">${SUBJECTS.length} subjects offered</div></div>
+    <div class="stat-card"><div class="label">Fees Collected</div><div class="value" style="font-size:19px;">${ugx(collected)}</div><div class="sub">this term so far</div></div>
+    <div class="stat-card"><div class="label">Open Issues</div><div class="value">${openIssues}</div><div class="sub">need attention</div></div>
+  </div>
+  <div class="card">
+    <div class="panel-title"><h3>Class fee structure</h3><span class="small-note" style="cursor:pointer;text-decoration:underline;" onclick="STATE.page='fees';render()">manage</span></div>
+    <table><thead><tr><th>Class</th><th>Term Fee</th><th>Students</th></tr></thead><tbody>
+      ${CLASSES.map(c=>`<tr><td>${c}</td><td class="mono">${ugx(STATE.feesStructure[c])}</td><td>${STATE.students.filter(s=>s.cls===c).length}</td></tr>`).join("")}
+    </tbody></table>
+  </div>`;
+}
+
+/* ===================== FEES ===================== */
+function studentFees(){
+  const s = currentUser();
+  const {total,paid,balance} = studentBalance(s);
+  const pct = total? Math.min(100, Math.round(paid/total*100)) : 0;
+  const history = STATE.payments.filter(p=>p.studentId===s.id).sort((a,b)=>b.date.localeCompare(a.date));
+  return `
+  <div class="grid g3" style="margin-bottom:20px;">
+    <div class="stat-card"><div class="label">Term Fee (${s.cls})</div><div class="value">${ugx(total)}</div></div>
+    <div class="stat-card"><div class="label">Amount Paid</div><div class="value" style="color:var(--success);">${ugx(paid)}</div></div>
+    <div class="stat-card"><div class="label">Balance</div><div class="value" style="color:${balance>0?'var(--danger)':'var(--success)'};">${ugx(balance)}</div></div>
+  </div>
+  <div class="card" style="margin-bottom:18px;">
+    <div class="panel-title"><h3>Payment progress</h3><span class="small-note">${pct}% cleared</span></div>
+    <div class="progress-track"><div class="progress-fill" style="width:${pct}%;"></div></div>
+  </div>
+  <div class="card">
+    <div class="panel-title"><h3>Payment history</h3></div>
+    ${history.length? `<table><thead><tr><th>Date</th><th>Method</th><th>Amount</th></tr></thead><tbody>
+      ${history.map(p=>`<tr><td>${p.date}</td><td>${esc(p.method)}</td><td class="mono">${ugx(p.amount)}</td></tr>`).join("")}
+    </tbody></table>` : `<div class="empty"><div class="big">🧾</div>No payments recorded yet.</div>`}
+  </div>`;
+}
+function adminFees(){
+  return `
+  <div class="card" style="margin-bottom:20px;">
+    <div class="panel-title"><h3>Set term fees per class</h3></div>
+    <table><thead><tr><th>Class</th><th>Current Term Fee (UGX)</th><th></th></tr></thead><tbody>
+      ${CLASSES.map(c=>`<tr><td>${c}</td>
+        <td><input id="feeInput-${c}" class="mono" style="max-width:180px;padding:7px 10px;border:1px solid var(--line);border-radius:4px;" type="number" value="${STATE.feesStructure[c]}"></td>
+        <td><button class="btn btn-gold btn-sm" onclick="saveFee('${c}')">Save</button></td></tr>`).join("")}
+    </tbody></table>
+  </div>
+  <div class="card">
+    <div class="panel-title"><h3>Student balances &amp; record payment</h3></div>
+    <table><thead><tr><th>Student</th><th>Class</th><th>Total</th><th>Paid</th><th>Balance</th><th>Record payment</th></tr></thead><tbody>
+      ${STATE.students.map(s=>{
+        const {total,paid,balance} = studentBalance(s);
+        return `<tr><td>${esc(s.name)}</td><td>${s.cls}</td><td class="mono">${ugx(total)}</td><td class="mono">${ugx(paid)}</td>
+        <td class="mono" style="color:${balance>0?'var(--danger)':'var(--success)'};">${ugx(balance)}</td>
+        <td style="display:flex;gap:6px;">
+          <input id="payAmt-${s.id}" type="number" placeholder="Amount" style="width:110px;padding:7px 9px;border:1px solid var(--line);border-radius:4px;">
+          <button class="btn btn-primary btn-sm" onclick="recordPayment('${s.id}')">Add</button>
+        </td></tr>`;
+      }).join("")}
+    </tbody></table>
+  </div>`;
+}
+async function saveFee(cls){
+  const val = Number(document.getElementById("feeInput-"+cls).value);
+  if(!val || val<0){ alert("Enter a valid amount."); return; }
+  STATE.feesStructure[cls] = val;
+  await persist();
+  render(); STATE.page="fees"; render();
+  alert(cls+" term fee updated to "+ugx(val));
+}
+async function recordPayment(studentId){
+  const inp = document.getElementById("payAmt-"+studentId);
+  const amt = Number(inp.value);
+  if(!amt || amt<=0){ alert("Enter a valid payment amount."); return; }
+  STATE.payments.push({id:uid("pay"), studentId, amount:amt, date:today(), method:"Front Office"});
+  await persist();
+  render(); STATE.page="fees"; render();
+}
+
+/* ===================== RESULTS ===================== */
+function studentResults(){
+  const s = currentUser();
+  const mine = STATE.results.filter(r=>r.studentId===s.id);
+  const terms = [...new Set(mine.map(r=>r.term))];
+  return `
+  ${mine.length===0? `<div class="empty"><div class="big">📄</div>No results published yet. Check back after tests are graded.</div>` :
+    terms.map(term=>`
+    <div class="card" style="margin-bottom:16px;">
+      <div class="panel-title"><h3>${term}</h3></div>
+      <table><thead><tr><th>Subject</th><th>Type</th><th>Score</th><th>Grade</th></tr></thead><tbody>
+        ${mine.filter(r=>r.term===term).map(r=>`<tr><td>${esc(r.subject)}</td><td>${esc(r.type)}</td><td class="mono">${r.score}%</td><td><span class="badge-grade">${grade(r.score)}</span></td></tr>`).join("")}
+      </tbody></table>
+    </div>`).join("")}`;
+}
+function teacherResultsEntry(){
+  const t = currentUser();
+  return `
+  <div class="card" style="margin-bottom:20px;">
+    <div class="panel-title"><h3>Enter / update results</h3></div>
+    <div class="form-row three">
+      <div class="f"><label>Subject</label><select id="reSubject">${t.subjects.map(sub=>`<option>${esc(sub)}</option>`).join("")}</select></div>
+      <div class="f"><label>Class</label><select id="reClass">${t.classes.map(c=>`<option>${c}</option>`).join("")}</select></div>
+      <div class="f"><label>Term</label><select id="reTerm"><option>Term 1</option><option selected>Term 2</option><option>Term 3</option></select></div>
+    </div>
+    <button class="btn btn-primary btn-sm" onclick="loadResultsRoster()">Load class roster</button>
+  </div>
+  <div id="resultsRoster"></div>`;
+}
+function loadResultsRoster(){
+  const cls = document.getElementById("reClass").value;
+  const subject = document.getElementById("reSubject").value;
+  const term = document.getElementById("reTerm").value;
+  const roster = STATE.students.filter(s=>s.cls===cls);
+  const box = document.getElementById("resultsRoster");
+  box.innerHTML = `
+  <div class="card">
+    <div class="panel-title"><h3>${esc(subject)} — ${cls} — ${term}</h3></div>
+    <table><thead><tr><th>Student</th><th>Score (%)</th></tr></thead><tbody>
+      ${roster.map(s=>{
+        const existing = STATE.results.find(r=>r.studentId===s.id && r.subject===subject && r.term===term);
+        return `<tr><td>${esc(s.name)}</td><td><input id="score-${s.id}" type="number" min="0" max="100" value="${existing?existing.score:''}" style="width:100px;padding:7px 9px;border:1px solid var(--line);border-radius:4px;"></td></tr>`;
+      }).join("")}
+    </tbody></table>
+    <div style="margin-top:14px;"><button class="btn btn-gold" onclick="saveResults('${cls}','${subject.replace(/'/g,"\\'")}','${term}')">Save results</button></div>
+  </div>`;
+}
+async function saveResults(cls, subject, term){
+  const roster = STATE.students.filter(s=>s.cls===cls);
+  let count = 0;
+  roster.forEach(s=>{
+    const el = document.getElementById("score-"+s.id);
+    if(!el || el.value==="") return;
+    const score = Math.max(0, Math.min(100, Number(el.value)));
+    const existing = STATE.results.find(r=>r.studentId===s.id && r.subject===subject && r.term===term);
+    if(existing){ existing.score = score; } else {
+      STATE.results.push({id:uid("res"), studentId:s.id, subject, term, score, type:"Exam"});
+    }
+    count++;
+  });
+  await persist();
+  alert("Saved results for "+count+" student(s).");
+}
+
+/* ===================== TESTS ===================== */
+function studentTests(){
+  const s = currentUser();
+  const available = STATE.tests.filter(t=>t.cls===s.cls);
+  const mySubs = STATE.submissions.filter(x=>x.studentId===s.id);
+  if(STATE.activeTest) return renderTakeTest(STATE.activeTest);
+  return `
+  <div class="card">
+    <div class="panel-title"><h3>Available tests for ${s.cls}</h3></div>
+    ${available.length===0? `<div class="empty"><div class="big">📝</div>No tests assigned yet.</div>` :
+    `<table><thead><tr><th>Title</th><th>Subject</th><th>Duration</th><th>Status</th><th></th></tr></thead><tbody>
+      ${available.map(t=>{
+        const sub = mySubs.find(x=>x.testId===t.id);
+        return `<tr><td>${esc(t.title)}</td><td>${esc(t.subject)}</td><td>${t.duration} min</td>
+        <td>${sub? `<span class="tag tag-resolved">Completed · ${sub.score}/${sub.total}</span>` : `<span class="tag tag-open">Not started</span>`}</td>
+        <td>${sub? "" : `<button class="btn btn-primary btn-sm" onclick="STATE.activeTest='${t.id}';render()">Start test</button>`}</td></tr>`;
+      }).join("")}
+    </tbody></table>`}
+  </div>`;
+}
+function renderTakeTest(testId){
+  const t = STATE.tests.find(x=>x.id===testId);
+  if(!t) return "<div class='empty'>Test not found.</div>";
+  window.__answers = window.__answers || {};
+  return `
+  <div class="card" style="margin-bottom:14px;">
+    <div class="panel-title"><h3>${esc(t.title)}</h3><span class="small-note">${esc(t.subject)} · ${t.duration} min</span></div>
+  </div>
+  ${t.questions.map((q,qi)=>`
+    <div class="qcard">
+      <div style="font-weight:600;margin-bottom:10px;">${qi+1}. ${esc(q.q)}</div>
+      ${q.opts.map((o,oi)=>`<div class="qopt ${window.__answers[qi]===oi?'picked':''}" onclick="pickAnswer(${qi},${oi})">
+        <span class="mono" style="width:18px;">${String.fromCharCode(65+oi)}</span> ${esc(o)}
+      </div>`).join("")}
+    </div>`).join("")}
+  <button class="btn btn-gold" onclick="submitTest('${t.id}')">Submit test</button>
+  <button class="btn btn-ghost" style="margin-left:8px;" onclick="STATE.activeTest=null;window.__answers={};render()">Cancel</button>`;
+}
+function pickAnswer(qi,oi){ window.__answers=window.__answers||{}; window.__answers[qi]=oi; render(); }
+async function submitTest(testId){
+  const t = STATE.tests.find(x=>x.id===testId);
+  const s = currentUser();
+  const answers = window.__answers || {};
+  let score = 0;
+  t.questions.forEach((q,qi)=>{ if(answers[qi]===q.ans) score++; });
+  const total = t.questions.length;
+  STATE.submissions.push({id:uid("sub"), testId, studentId:s.id, score, total, date:today()});
+  STATE.results.push({id:uid("res"), studentId:s.id, subject:t.subject, term:"Term 2", score:Math.round(score/total*100), type:"Online Test"});
+  window.__answers = {};
+  STATE.activeTest = null;
+  await persist();
+  render();
+  alert("Test submitted! You scored "+score+" / "+total+".");
+}
+function teacherTests(){
+  const t = currentUser();
+  window.__draftQ = window.__draftQ || [{q:"",opts:["","","",""],ans:0}];
+  const myTests = STATE.tests.filter(x=>x.teacherId===t.id);
+  return `
+  <div class="card" style="margin-bottom:20px;">
+    <div class="panel-title"><h3>Create a new test</h3></div>
+    <div class="form-row three">
+      <div class="f"><label>Title</label><input id="ntTitle" placeholder="e.g. Mid-term Quiz"></div>
+      <div class="f"><label>Subject</label><select id="ntSubject">${t.subjects.map(x=>`<option>${esc(x)}</option>`).join("")}</select></div>
+      <div class="f"><label>Class</label><select id="ntClass">${t.classes.map(c=>`<option>${c}</option>`).join("")}</select></div>
+    </div>
+    <div class="form-row two">
+      <div class="f"><label>Duration (minutes)</label><input id="ntDuration" type="number" value="15"></div>
+    </div>
+    <div id="qBuilder">${renderQBuilder()}</div>
+    <button class="btn btn-ghost btn-sm" onclick="addDraftQ()">+ Add question</button>
+    <div style="margin-top:14px;"><button class="btn btn-gold" onclick="saveTest()">Publish test</button></div>
+  </div>
+  <div class="card">
+    <div class="panel-title"><h3>My tests</h3></div>
+    ${myTests.length===0? `<div class="empty"><div class="big">🗂️</div>No tests created yet.</div>` :
+    `<table><thead><tr><th>Title</th><th>Subject</th><th>Class</th><th>Submissions</th></tr></thead><tbody>
+      ${myTests.map(x=>`<tr><td>${esc(x.title)}</td><td>${esc(x.subject)}</td><td>${x.cls}</td><td>${STATE.submissions.filter(s=>s.testId===x.id).length}</td></tr>`).join("")}
+    </tbody></table>`}
+  </div>`;
+}
+function renderQBuilder(){
+  return window.__draftQ.map((q,i)=>`
+    <div class="qcard">
+      <div class="f"><label>Question ${i+1}</label><input value="${esc(q.q)}" oninput="window.__draftQ[${i}].q=this.value"></div>
+      <div class="form-row two">
+        ${q.opts.map((o,oi)=>`<div class="f"><label>Option ${String.fromCharCode(65+oi)} ${q.ans===oi?'(correct)':''}</label>
+          <div style="display:flex;gap:6px;"><input value="${esc(o)}" oninput="window.__draftQ[${i}].opts[${oi}]=this.value" style="flex:1;">
+          <button class="btn btn-ghost btn-sm" onclick="window.__draftQ[${i}].ans=${oi};document.getElementById('qBuilder').innerHTML=renderQBuilder();">✓</button></div></div>`).join("")}
+      </div>
+    </div>`).join("");
+}
+function addDraftQ(){ window.__draftQ.push({q:"",opts:["","","",""],ans:0}); document.getElementById("qBuilder").innerHTML = renderQBuilder(); }
+async function saveTest(){
+  const t = currentUser();
+  const title = document.getElementById("ntTitle").value.trim();
+  const subject = document.getElementById("ntSubject").value;
+  const cls = document.getElementById("ntClass").value;
+  const duration = Number(document.getElementById("ntDuration").value)||15;
+  const questions = window.__draftQ.filter(q=>q.q.trim() && q.opts.every(o=>o.trim()));
+  if(!title || questions.length===0){ alert("Add a title and at least one complete question."); return; }
+  STATE.tests.push({id:uid("tst"), title, subject, cls, teacherId:t.id, duration, questions});
+  window.__draftQ = [{q:"",opts:["","","",""],ans:0}];
+  await persist();
+  render();
+  alert("Test published to "+cls+".");
+}
+
+/* ===================== NOTES ===================== */
+function studentNotes(){
+  const s = currentUser();
+  const mine = STATE.notes.filter(n=>n.cls===s.cls);
+  const bySubject = {};
+  mine.forEach(n=>{ (bySubject[n.subject] ||= []).push(n); });
+  const subs = Object.keys(bySubject);
+  return `
+  ${subs.length===0? `<div class="empty"><div class="big">📚</div>No notes uploaded for ${s.cls} yet.</div>` :
+  subs.map(sub=>`
+    <div class="card" style="margin-bottom:16px;">
+      <div class="panel-title"><h3>${esc(sub)}</h3></div>
+      ${bySubject[sub].map(n=>`
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px dotted var(--line);">
+          <div><div style="font-weight:600;">${esc(n.title)}</div><div class="small-note">${esc(findTeacher(n.teacherId)?.name||'Teacher')} · ${n.date}</div></div>
+          <button class="btn btn-primary btn-sm" onclick="downloadNote('${n.id}')">Download</button>
+        </div>`).join("")}
+    </div>`).join("")}`;
+}
+function downloadNote(id){
+  const n = STATE.notes.find(x=>x.id===id);
+  const blob = new Blob([n.title+"\\n"+n.subject+" · "+n.cls+"\\n\\n"+n.body], {type:"text/plain"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = n.title.replace(/[^a-z0-9]+/gi,"_")+".txt";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+function teacherNotes(){
+  const t = currentUser();
+  const mine = STATE.notes.filter(n=>n.teacherId===t.id);
+  return `
+  <div class="card" style="margin-bottom:20px;">
+    <div class="panel-title"><h3>Upload new notes</h3></div>
+    <div class="form-row two">
+      <div class="f"><label>Title</label><input id="noteTitle" placeholder="e.g. Trigonometry Cheat Sheet"></div>
+      <div class="f"><label>Subject</label><select id="noteSubject">${t.subjects.map(x=>`<option>${esc(x)}</option>`).join("")}</select></div>
+    </div>
+    <div class="form-row two">
+      <div class="f"><label>Class</label><select id="noteClass">${t.classes.map(c=>`<option>${c}</option>`).join("")}</select></div>
+      <div class="f"><label>&nbsp;</label></div>
+    </div>
+    <div class="f" style="margin-bottom:12px;"><label>Note content / summary</label><textarea id="noteBody" placeholder="Paste or type the note content students will download..."></textarea></div>
+    <button class="btn btn-gold" onclick="saveNote()">Upload note</button>
+  </div>
+  <div class="card">
+    <div class="panel-title"><h3>My uploads</h3></div>
+    ${mine.length===0? `<div class="empty"><div class="big">📁</div>No notes uploaded yet.</div>` :
+    `<table><thead><tr><th>Title</th><th>Subject</th><th>Class</th><th>Date</th><th></th></tr></thead><tbody>
+      ${mine.map(n=>`<tr><td>${esc(n.title)}</td><td>${esc(n.subject)}</td><td>${n.cls}</td><td>${n.date}</td>
+      <td><button class="btn btn-ghost btn-sm" onclick="deleteNote('${n.id}')">Remove</button></td></tr>`).join("")}
+    </tbody></table>`}
+  </div>`;
+}
+async function saveNote(){
+  const t = currentUser();
+  const title = document.getElementById("noteTitle").value.trim();
+  const subject = document.getElementById("noteSubject").value;
+  const cls = document.getElementById("noteClass").value;
+  const body = document.getElementById("noteBody").value.trim();
+  if(!title || !body){ alert("Add a title and note content."); return; }
+  STATE.notes.push({id:uid("note"), title, subject, cls, teacherId:t.id, body, date:today()});
+  await persist();
+  render();
+}
+async function deleteNote(id){ STATE.notes = STATE.notes.filter(n=>n.id!==id); await persist(); render(); }
+
+/* ===================== VOTING ===================== */
+function voteKey(pos,cand){ return pos+"|"+cand; }
+function ballotKey(stu,pos){ return stu+"|"+pos; }
+function votingPage(){
+  const role = STATE.session.role;
+  const u = currentUser();
+  const v = STATE.voting;
+  return `
+  ${role==="admin"? `<div class="card" style="margin-bottom:18px;"><div class="panel-title"><h3>Add new position</h3></div>
+    <div class="form-row two">
+      <div class="f"><label>Position title</label><input id="posTitle" placeholder="e.g. Sports Captain"></div>
+      <div class="f"><label>Candidates (comma-separated names)</label><input id="posCands" placeholder="e.g. Ayebale ken, KAtusime Gorret"></div>
+    </div>
+    <button class="btn btn-gold btn-sm" onclick="addPosition()">Create position</button>
+  </div>` : ""}
+  <div class="grid g2">
+  ${v.positions.map(pos=>{
+    const totalVotes = pos.candidates.reduce((a,c)=>a+(v.votes[voteKey(pos.id,c.id)]||0),0);
+    const already = role==="student" ? v.ballots[ballotKey(u.id,pos.id)] : null;
+    return `<div class="vote-card">
+      <div class="panel-title"><h3>${esc(pos.title)}</h3><span class="small-note">${totalVotes} vote${totalVotes!==1?'s':''}</span></div>
+      ${pos.candidates.map(c=>{
+        const count = v.votes[voteKey(pos.id,c.id)]||0;
+        const pct = totalVotes? Math.round(count/totalVotes*100) : 0;
+        const isMine = already===c.id;
+        return `<div class="cand-row">
+          <div style="flex:1;">
+            <div style="font-weight:600;">${esc(c.name)} <span class="small-note">${c.cls}</span></div>
+            <div class="progress-track" style="margin-top:6px;"><div class="progress-fill" style="width:${pct}%;"></div></div>
+          </div>
+          <div style="text-align:right;min-width:90px;">
+            <div class="mono" style="font-size:12.5px;">${count} (${pct}%)</div>
+            ${role==="student" ? (already? (isMine? `<span class="tag tag-resolved">Your vote</span>` : "") : `<button class="btn btn-primary btn-sm" style="margin-top:4px;" onclick="castVote('${pos.id}','${c.id}')">Vote</button>`) : ""}
+          </div>
+        </div>`;
+      }).join("")}
+      ${role==="student" && already ? `<div class="small-note" style="margin-top:8px;">You've already voted for this position.</div>` : ""}
+    </div>`;
+  }).join("")}
+  </div>`;
+}
+async function castVote(posId, candId){
+  const u = currentUser();
+  const bk = ballotKey(u.id,posId);
+  if(STATE.voting.ballots[bk]){ alert("You already voted for this position."); return; }
+  STATE.voting.ballots[bk] = candId;
+  const vk = voteKey(posId,candId);
+  STATE.voting.votes[vk] = (STATE.voting.votes[vk]||0)+1;
+  await persist();
+  render();
+}
+async function addPosition(){
+  const title = document.getElementById("posTitle").value.trim();
+  const names = document.getElementById("posCands").value.split(",").map(s=>s.trim()).filter(Boolean);
+  if(!title || names.length<2){ alert("Enter a title and at least two candidates."); return; }
+  const posId = uid("pos");
+  STATE.voting.positions.push({id:posId, title, candidates:names.map((n,i)=>({id:"c"+posId+i, name:n, cls:"—"}))});
+  await persist();
+  render();
+}
+
+/* ===================== GROUPS / CHAT ===================== */
+function groupsPage(){
+  const role = STATE.session.role;
+  const u = currentUser();
+  if(role==="student"){ STATE.chatGroup = u.cls; return renderChat(u.cls); }
+  if(role==="teacher"){ STATE.chatGroup = "teachers"; return renderChat("teachers"); }
+  // admin: pick any group
+  if(!STATE.chatGroup) STATE.chatGroup = "S1";
+  const keys = [...CLASSES, "teachers"];
+  return `
+  <div class="pill-list" style="margin-bottom:14px;">
+    ${keys.map(k=>`<span class="pill" style="cursor:pointer;${STATE.chatGroup===k?'background:var(--ink);color:var(--paper2);border-color:var(--ink);':''}" onclick="STATE.chatGroup='${k}';render()">${(STATE.groups[k]&&STATE.groups[k].name)||k}</span>`).join("")}
+  </div>
+  ${renderChat(STATE.chatGroup)}`;
+}
+function renderChat(key){
+  const g = STATE.groups[key] && STATE.groups[key].name ? STATE.groups[key] : {name:key, messages:[]};
+  const u = currentUser();
+  return `
+  <div class="chat-wrap">
+    <div class="chat-head"><h3 style="margin:0;font-size:15.5px;">${esc(g.name)}</h3><span class="small-note">${g.messages.length} messages</span></div>
+    <div class="chat-body" id="chatBody">
+      ${g.messages.map(m=>`<div class="msg ${m.who===u.name?'me':'other'}"><div class="who">${esc(m.who)}</div>${esc(m.text)}<div class="time">${m.time}</div></div>`).join("")}
+    </div>
+    <div class="chat-input">
+      <input id="chatInput" placeholder="Type a message…" onkeydown="if(event.key==='Enter')sendChat('${key}')">
+      <button class="btn btn-gold btn-sm" onclick="sendChat('${key}')">Send</button>
+    </div>
+  </div>`;
+}
+async function sendChat(key){
+  const input = document.getElementById("chatInput");
+  const text = input.value.trim();
+  if(!text) return;
+  const u = currentUser();
+  if(!STATE.groups[key] || !STATE.groups[key].name){ STATE.groups[key] = {name:key, messages:[]}; }
+  STATE.groups[key].messages.push({who:u.name, text, time:nowTime()});
+  await persist();
+  render();
+  setTimeout(()=>{ const b=document.getElementById("chatBody"); if(b) b.scrollTop=b.scrollHeight; },0);
+}
+
+/* ===================== ISSUES ===================== */
+function issuesPage(){
+  const role = STATE.session.role;
+  const u = currentUser();
+  if(role==="admin"){
+    return `
+    <div class="card">
+      <div class="panel-title"><h3>All reported issues</h3></div>
+      ${STATE.issues.length===0? `<div class="empty"><div class="big">✅</div>No issues reported.</div>` :
+      `<table><thead><tr><th>Reported by</th><th>Category</th><th>Title</th><th>Date</th><th>Status</th><th></th></tr></thead><tbody>
+        ${STATE.issues.map(i=>`<tr><td>${esc(nameOf(i.by))} <span class="small-note">(${i.role})</span></td><td>${esc(i.category)}</td><td>${esc(i.title)}</td><td>${i.date}</td>
+        <td><span class="tag ${i.status==='Resolved'?'tag-resolved':i.status==='In Progress'?'tag-progress':'tag-open'}">${i.status}</span></td>
+        <td>${i.status!=="Resolved"? `<button class="btn btn-ghost btn-sm" onclick="advanceIssue('${i.id}')">${i.status==='Open'?'Mark in progress':'Mark resolved'}</button>`:""}</td></tr>`).join("")}
+      </tbody></table>`}
+    </div>`;
+  }
+  const mine = STATE.issues.filter(i=>i.by===u.id);
+  return `
+  <div class="card" style="margin-bottom:20px;">
+    <div class="panel-title"><h3>Submit a new issue</h3></div>
+    <div class="form-row two">
+      <div class="f"><label>Category</label><select id="issCat"><option>Academic</option><option>Fees</option><option>Bullying / Welfare</option><option>Facilities</option><option>Other</option></select></div>
+      <div class="f"><label>Title</label><input id="issTitle" placeholder="Short summary"></div>
+    </div>
+    <div class="f" style="margin-bottom:12px;"><label>Description</label><textarea id="issDesc" placeholder="Describe the issue in detail..."></textarea></div>
+    <button class="btn btn-gold" onclick="submitIssue()">Submit report</button>
+  </div>
+  <div class="card">
+    <div class="panel-title"><h3>My reports</h3></div>
+    ${mine.length===0? `<div class="empty"><div class="big">🗒️</div>You haven't reported anything yet.</div>` :
+    `<table><thead><tr><th>Title</th><th>Category</th><th>Date</th><th>Status</th></tr></thead><tbody>
+      ${mine.map(i=>`<tr><td>${esc(i.title)}</td><td>${esc(i.category)}</td><td>${i.date}</td><td><span class="tag ${i.status==='Resolved'?'tag-resolved':i.status==='In Progress'?'tag-progress':'tag-open'}">${i.status}</span></td></tr>`).join("")}
+    </tbody></table>`}
+  </div>`;
+}
+function nameOf(id){ return (findStudent(id)||findTeacher(id)||{name:"Unknown"}).name; }
+async function submitIssue(){
+  const u = currentUser();
+  const category = document.getElementById("issCat").value;
+  const title = document.getElementById("issTitle").value.trim();
+  const desc = document.getElementById("issDesc").value.trim();
+  if(!title || !desc){ alert("Add a title and description."); return; }
+  STATE.issues.push({id:uid("iss"), by:u.id, role:STATE.session.role, category, title, desc, status:"Open", date:today()});
+  await persist();
+  render();
+  alert("Issue submitted to the administration.");
+}
+async function advanceIssue(id){
+  const i = STATE.issues.find(x=>x.id===id);
+  i.status = i.status==="Open" ? "In Progress" : "Resolved";
+  await persist();
+  render();
+}
+
+/* ===================== ADMIN: STUDENTS / TEACHERS ===================== */
+function adminStudents(){
+  return `
+  <div class="card" style="margin-bottom:20px;">
+    <div class="panel-title"><h3>Admit a new student</h3></div>
+    <div class="form-row three">
+      <div class="f"><label>Full name</label><input id="newStuName" placeholder="e.g. Asumpta"></div>
+      <div class="f"><label>Class</label><select id="newStuClass">${CLASSES.map(c=>`<option>${c}</option>`).join("")}</select></div>
+      <div class="f"><label>Admission No.</label><input id="newStuAdm" placeholder="e.g A001"></div>
+    </div>
+    <button class="btn btn-gold btn-sm" onclick="addStudent()">Admit student</button>
+  </div>
+  <div class="card">
+    <div class="panel-title"><h3>All students (${STATE.students.length})</h3></div>
+    <table><thead><tr><th>Name</th><th>Class</th><th>Adm No.</th><th>Balance</th></tr></thead><tbody>
+      ${STATE.students.map(s=>{const {balance}=studentBalance(s); return `<tr><td>${esc(s.name)}</td><td>${s.cls}</td><td class="mono">${esc(s.adm)}</td><td class="mono" style="color:${balance>0?'var(--danger)':'var(--success)'};">${ugx(balance)}</td></tr>`;}).join("")}
+    </tbody></table>
+  </div>`;
+}
+async function addStudent(){
+  const name = document.getElementById("newStuName").value.trim();
+  const cls = document.getElementById("newStuClass").value;
+  const adm = document.getElementById("newStuAdm").value.trim() || ("BFSS-"+cls+"-"+Math.floor(Math.random()*900+100));
+  if(!name){ alert("Enter the student's full name."); return; }
+  STATE.students.push({id:uid("stu"), name, cls, adm, pass:"pass123"});
+  await persist();
+  render(); STATE.page="students"; render();
+}
+function adminTeachers(){
+  return `
+  <div class="card" style="margin-bottom:20px;">
+    <div class="panel-title"><h3>Add a new teacher</h3></div>
+    <div class="form-row two">
+      <div class="f"><label>Full name</label><input id="newTchName" placeholder="e.g. Mr. Albert"></div>
+      <div class="f"><label>Classes taught (comma-separated)</label><input id="newTchClasses" placeholder="e.g. S1, S2"></div>
+    </div>
+    <div class="f" style="margin-bottom:12px;"><label>Subjects taught</label>
+      <select id="newTchSubjects" multiple size="6" style="width:100%;padding:8px;border:1px solid var(--line);border-radius:4px;">
+        ${SUBJECTS.map(sub=>`<option value="${esc(sub)}">${esc(sub)}</option>`).join("")}
+      </select>
+      <div class="small-note" style="margin-top:4px;">Hold Ctrl / Cmd to select multiple subjects.</div>
+    </div>
+    <button class="btn btn-gold btn-sm" onclick="addTeacher()">Add teacher</button>
+  </div>
+  <div class="card">
+    <div class="panel-title"><h3>All teachers (${STATE.teachers.length})</h3></div>
+    <table><thead><tr><th>Name</th><th>Subjects</th><th>Classes</th></tr></thead><tbody>
+      ${STATE.teachers.map(t=>`<tr><td>${esc(t.name)}</td><td>${esc(t.subjects.join(", "))}</td><td>${esc(t.classes.join(", "))}</td></tr>`).join("")}
+    </tbody></table>
+  </div>`;
+}
+async function addTeacher(){
+  const name = document.getElementById("newTchName").value.trim();
+  const classes = document.getElementById("newTchClasses").value.split(",").map(s=>s.trim()).filter(Boolean);
+  const subjSelect = document.getElementById("newTchSubjects");
+  const subjects = Array.from(subjSelect.selectedOptions).map(o=>o.value);
+  if(!name || classes.length===0 || subjects.length===0){ alert("Fill in name, at least one class and one subject."); return; }
+  STATE.teachers.push({id:uid("tch"), name, subjects, classes, pass:"pass123"});
+  await persist();
+  render(); STATE.page="teachers"; render();
+}
+
+/* ===================== SETTINGS ===================== */
+function settingsPage(){
+  const u = currentUser();
+  const role = STATE.session.role;
+  return `
+  <div class="grid g2">
+    <div class="card">
+      <div class="panel-title"><h3>Account details</h3></div>
+      <table><tbody>
+        <tr><td style="font-weight:600;width:160px;">Name</td><td>${esc(u.name)}</td></tr>
+        <tr><td style="font-weight:600;">Role</td><td style="text-transform:capitalize;">${role}</td></tr>
+        ${u.cls? `<tr><td style="font-weight:600;">Class</td><td>${u.cls}</td></tr>`:""}
+        ${u.adm? `<tr><td style="font-weight:600;">Admission No.</td><td class="mono">${esc(u.adm)}</td></tr>`:""}
+        ${u.subjects? `<tr><td style="font-weight:600;">Subjects</td><td>${esc(u.subjects.join(", "))}</td></tr>`:""}
+        ${u.classes? `<tr><td style="font-weight:600;">Classes</td><td>${esc(u.classes.join(", "))}</td></tr>`:""}
+      </tbody></table>
+    </div>
+    <div class="card">
+      <div class="panel-title"><h3>Change password</h3></div>
+      <div class="f"><label>Current password</label><input id="curPass" type="password"></div>
+      <div class="f"><label>New password</label><input id="newPass" type="password" placeholder="At least 4 characters"></div>
+      <div class="f" style="margin-bottom:14px;"><label>Confirm new password</label><input id="newPass2" type="password"></div>
+      <button class="btn btn-gold" onclick="changePassword()">Update password</button>
+    </div>
+  </div>
+  ${role==="admin"? `
+  <div class="card" style="margin-top:16px;">
+    <div class="panel-title"><h3>Administrator accounts</h3></div>
+    <table><thead><tr><th>Name</th></tr></thead><tbody>
+      ${STATE.admins.map(a=>`<tr><td>${esc(a.name)}</td></tr>`).join("")}
+    </tbody></table>
+    <div class="form-row two" style="margin-top:14px;">
+      <div class="f"><label>New administrator name</label><input id="newAdmName" placeholder="e.g. Mr. Albert"></div>
+      <div class="f"><label>Temporary password</label><input id="newAdmPass" type="password" placeholder="At least 4 characters"></div>
+    </div>
+    <button class="btn btn-primary btn-sm" onclick="addAdmin()">Add administrator</button>
+    <div class="small-note" style="margin-top:8px;">New administrators should sign in and set their own password here right away. It can take a moment to sync — wait for the confirmation alert before signing out.</div>
+  </div>
+  <div class="card" style="margin-top:16px;border-color:var(--danger);">
+    <div class="panel-title"><h3 style="color:var(--danger);">Danger zone</h3></div>
+    <div class="small-note" style="margin-bottom:10px;">If accounts or data here don't match what's in the portal's source file (for example after you hand-edit the seed data), shared storage may be holding an older copy. This wipes ALL saved data for every user and restores the defaults built into this file.</div>
+    <button class="btn btn-ghost btn-sm" style="border-color:var(--danger);color:var(--danger);" onclick="resetPortalData()">Reset all portal data to file defaults</button>
+  </div>` : ""}
+  `;
+}
+async function changePassword(){
+  const u = currentUser();
+  const cur = document.getElementById("curPass").value;
+  const np = document.getElementById("newPass").value;
+  const np2 = document.getElementById("newPass2").value;
+  if(u.pass !== cur){ alert("Your current password is incorrect."); return; }
+  if(np.length<4){ alert("Choose a new password with at least 4 characters."); return; }
+  if(np !== np2){ alert("New passwords do not match."); return; }
+  u.pass = np;
+  await persist();
+  document.getElementById("curPass").value = "";
+  document.getElementById("newPass").value = "";
+  document.getElementById("newPass2").value = "";
+  alert("Your password has been updated.");
+}
+async function addAdmin(){
+  const name = document.getElementById("newAdmName").value.trim();
+  const pass = document.getElementById("newAdmPass").value;
+  if(!name || pass.length<4){ alert("Enter a name and a password with at least 4 characters."); return; }
+  STATE.admins.push({id:uid("adm"), name, pass});
+  await persist();
+  render(); STATE.page="settings"; render();
+  alert("New administrator account created and saved. They can now sign in from the Admin tab.");
+}
+async function resetPortalData(){
+  if(!confirm("This will erase ALL saved portal data (students, teachers, results, fees, tests, notes, votes, messages) for everyone and restore the defaults built into this file. This cannot be undone. Continue?")) return;
+  const fresh = JSON.parse(JSON.stringify(DEFAULT_STATE));
+  Object.assign(STATE, fresh);
+  STATE.session = null;
+  await persist();
+  loginMode = "login";
+  render();
+  alert("Portal data has been reset to the defaults in this file. Please sign in again.");
+}
+
+/* ===================== BOOT ===================== */
+boot();
+</script>
+</body>
+</html>
