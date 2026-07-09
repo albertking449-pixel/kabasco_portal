@@ -1,15 +1,12 @@
 {
   "name": "kabalega-portal-backend",
   "version": "1.0.0",
-  "description": "MySQL-backed API for the Kabalega Secondary School portal",
-  "main": "server.js",
+  "description": "D1-backed API for the Kabalega Secondary School portal",
   "scripts": {
-    "start": "node server.js"
+    "dev": "wrangler pages dev.",
+    "deploy": "wrangler pages deploy."
   },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "mysql2": "^3.11.0"
+  "devDependencies": {
+    "wrangler": "^3.78.0"
   }
 }
