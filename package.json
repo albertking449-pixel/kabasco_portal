@@ -1,12 +1,8 @@
 {
   "name": "kabalega-portal-backend",
   "version": "1.0.0",
-  "description": "D1-backed API for the Kabalega Secondary School portal",
   "scripts": {
     "dev": "wrangler pages dev.",
     "deploy": "wrangler pages deploy."
-  },
-  "devDependencies": {
-    "wrangler": "^3.78.0"
   }
 }
