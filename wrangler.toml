@@ -11,4 +11,4 @@ ALLOWED_ORIGIN = "*"
 [[d1_databases]]
 binding = "db"
 database_name = "kabasco_portal"
-database_id = "REPLACE-WITH-YOUR-DATABASE-ID"
+database_id = "b3d262c3-aa10-496b-abaf-a57f086af050"
