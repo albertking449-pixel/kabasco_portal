@@ -85,6 +85,13 @@
     .id-left{padding:36px 28px;}
     .id-right{padding:36px 28px;max-height:none;}
   }
+  @media(max-width:480px){
+    .id-left{padding:28px 20px;}
+    .id-right{padding:28px 20px;}
+    .id-left h1{font-size:26px;}
+    .crest{width:64px;height:64px;}
+    .crest span{font-size:17px;}
+  }
 
   /* ---------- SHELL ---------- */
   .shell{display:flex;min-height:100vh;background:var(--paper);}
@@ -107,16 +114,47 @@
   .user-chip .urole{font-size:10.5px;color:#9fb0a3;text-transform:uppercase;letter-spacing:.6px;}
 
   .main{flex:1;display:flex;flex-direction:column;min-width:0;}
-  .topbar{height:60px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:var(--paper2);position:relative;}
-  .topbar h2{margin:0;font-size:19px;}
+  .topbar{height:60px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:var(--paper2);position:relative;gap:12px;}
+  .topbar h2{margin:0;font-size:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .topbar .breadcrumb{font-size:11px;color:var(--text-soft);text-transform:uppercase;letter-spacing:1px;}
-  .topbar-right{display:flex;align-items:center;gap:16px;}
+  .topbar-right{display:flex;align-items:center;gap:16px;flex-shrink:0;}
   .content{padding:28px;overflow-y:auto;}
+
+  /* ---------- Hamburger / mobile sidebar ---------- */
+  .hamburger-btn{display:none;background:transparent;border:1px solid var(--line);border-radius:4px;width:36px;height:36px;font-size:17px;align-items:center;justify-content:center;flex-shrink:0;color:var(--text);}
+  .sidebar-close{display:none;}
+  .sidebar-overlay{display:none;}
+  .table-scroll{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .table-scroll table{min-width:520px;}
+
+  @media(max-width:900px){
+    .shell{position:relative;}
+    .hamburger-btn{display:flex;}
+    .sidebar{
+      position:fixed;top:0;left:0;bottom:0;z-index:120;
+      transform:translateX(-100%);transition:transform .22s ease;
+      width:80vw;max-width:280px;box-shadow:4px 0 24px rgba(0,0,0,.25);
+    }
+    .shell.sidebar-open .sidebar{transform:translateX(0);}
+    .sidebar-close{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.25);color:#D7DED9;font-size:13px;margin-left:auto;cursor:pointer;flex-shrink:0;}
+    .side-brand{position:relative;}
+    .sidebar-overlay{
+      display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:110;
+    }
+    .shell.sidebar-open .sidebar-overlay{display:block;}
+    .topbar{padding:0 16px;}
+    .topbar-date{display:none;}
+    .content{padding:16px;}
+  }
+  @media(max-width:520px){
+    .topbar h2{font-size:16px;}
+    .content{padding:12px;}
+  }
 
   .bell-wrap{position:relative;}
   .bell-btn{position:relative;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;}
   .bell-dot{position:absolute;top:-2px;right:-2px;background:var(--danger);color:#fff;font-size:9.5px;font-weight:700;border-radius:20px;min-width:16px;height:16px;display:flex;align-items:center;justify-content:center;padding:0 3px;}
-  .bell-panel{position:absolute;top:44px;right:0;width:340px;max-height:420px;overflow-y:auto;background:#fff;border:1px solid var(--line);border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,.15);z-index:50;}
+  .bell-panel{position:absolute;top:44px;right:0;width:340px;max-width:88vw;max-height:420px;overflow-y:auto;background:#fff;border:1px solid var(--line);border-radius:6px;box-shadow:0 8px 24px rgba(0,0,0,.15);z-index:50;}
   .bell-head{padding:12px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;}
   .bell-item{padding:10px 14px;border-bottom:1px dotted var(--line);font-size:12.5px;}
   .bell-item:last-child{border-bottom:none;}
@@ -127,6 +165,7 @@
   .g3{grid-template-columns:repeat(3,1fr);}
   .g2{grid-template-columns:repeat(2,1fr);}
   @media(max-width:1000px){.g4{grid-template-columns:repeat(2,1fr);}.g3{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:640px){.g4,.g3,.g2{grid-template-columns:1fr;}}
 
   .card{background:var(--paper2);border:1px solid var(--line);border-radius:6px;padding:18px 20px;}
   .stat-card{background:var(--paper2);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:4px;padding:16px 18px;}
@@ -153,14 +192,18 @@
   .form-row{display:grid;gap:12px;margin-bottom:12px;}
   .form-row.two{grid-template-columns:1fr 1fr;}
   .form-row.three{grid-template-columns:1fr 1fr 1fr;}
+  @media(max-width:640px){
+    .form-row.two,.form-row.three{grid-template-columns:1fr;}
+  }
   label.f{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.8px;color:var(--text-soft);margin-bottom:5px;font-weight:600;}
   .f input,.f select,.f textarea{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:4px;background:#fff;}
   .f textarea{min-height:70px;resize:vertical;}
 
-  .chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 200px);border:1px solid var(--line);border-radius:6px;background:var(--paper2);}
+  .chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 200px);min-height:340px;border:1px solid var(--line);border-radius:6px;background:var(--paper2);}
   .chat-head{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;}
   .chat-body{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:10px;}
-  .msg{max-width:70%;padding:9px 13px;border-radius:8px;font-size:13.5px;}
+  .msg{max-width:70%;padding:9px 13px;border-radius:8px;font-size:13.5px;word-break:break-word;}
+  @media(max-width:640px){.msg{max-width:88%;}}
   .msg .who{font-size:10.5px;font-weight:700;letter-spacing:.4px;color:var(--gold-dark);margin-bottom:2px;text-transform:uppercase;}
   .msg.me{align-self:flex-end;background:var(--ink);color:var(--paper2);border-bottom-right-radius:2px;}
   .msg.me .who{color:var(--gold);}
@@ -298,7 +341,12 @@ function render(){
   app.innerHTML = STATE.session ? renderShell() : renderLogin();
 }
 
-const API_BASE = "http://localhost:4000";
+// Point this at your deployed Cloudflare Worker (see cf-worker/ folder),
+// e.g. "https://kabasco-portal-api.<your-subdomain>.workers.dev"
+// The Worker reads/writes a Cloudflare D1 database named "kabasco_portal"
+// (bound in wrangler.toml as `db`). Leave this blank ("") to fall back to
+// the browser's built-in shared storage instead.
+const API_BASE = "";
 
 const STORAGE_KEY = "kabalega-portal-data";
 let storageAvailable = true;
@@ -319,7 +367,7 @@ async function persist(){
         body: JSON.stringify(snapshot)
       });
     }catch(e){
-      console.error("Could not save to your MySQL-backed API:", e);
+      console.error("Could not save to your D1-backed API:", e);
     }
     return;
   }
@@ -339,9 +387,9 @@ async function loadFromStorage(){
         const data = await res.json();
         if(data && Object.keys(data).length){ Object.assign(STATE, data); return; }
       }
-      await persist(); // empty row in MySQL yet — seed it with the file's defaults
+      await persist(); // no row in D1 yet — seed it with the file's defaults
     }catch(e){
-      console.error("Could not reach your MySQL-backed API, falling back to built-in storage:", e);
+      console.error("Could not reach your D1-backed API, falling back to built-in storage:", e);
     }
     return;
   }
@@ -591,16 +639,18 @@ function renderShell(){
   const nav = navFor(role);
   return `
   <div class="shell">
+    <div class="sidebar-overlay" onclick="closeSidebar()"></div>
     <aside class="sidebar">
       <div class="side-brand">
         <div class="mini-crest">KS</div>
         <div><b>Kabalega S.S.</b><span>Online Portal</span></div>
+        <div class="sidebar-close" onclick="closeSidebar()">✕</div>
       </div>
       ${nav.map(g=>`
         <div class="nav-group">
           <div class="nav-label">${g.group}</div>
           ${g.items.map(([key,label])=>`
-            <div class="nav-item ${STATE.page===key?'active':''}" onclick="STATE.page='${key}';STATE.chatGroup=null;STATE.activeTest=null;window.__bellOpen=false;render()">
+            <div class="nav-item ${STATE.page===key?'active':''}" onclick="STATE.page='${key}';STATE.chatGroup=null;STATE.activeTest=null;window.__bellOpen=false;closeSidebar();render()">
               <span class="nav-dot"></span>${label}
             </div>`).join("")}
         </div>`).join("")}
@@ -614,9 +664,12 @@ function renderShell(){
     </aside>
     <div class="main">
       <div class="topbar">
-        <div><div class="breadcrumb">${role} portal</div><h2>${pageTitle()}</h2></div>
+        <div style="display:flex;align-items:center;gap:12px;min-width:0;">
+          <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open menu">☰</button>
+          <div style="min-width:0;"><div class="breadcrumb">${role} portal</div><h2>${pageTitle()}</h2></div>
+        </div>
         <div class="topbar-right">
-          <div class="small-note">${new Date().toLocaleDateString(undefined,{weekday:'long', year:'numeric', month:'long', day:'numeric'})}</div>
+          <div class="small-note topbar-date">${new Date().toLocaleDateString(undefined,{weekday:'long', year:'numeric', month:'long', day:'numeric'})}</div>
           ${renderBell()}
         </div>
       </div>
@@ -624,6 +677,8 @@ function renderShell(){
     </div>
   </div>`;
 }
+function openSidebar(){ document.querySelector(".shell")?.classList.add("sidebar-open"); }
+function closeSidebar(){ document.querySelector(".shell")?.classList.remove("sidebar-open"); }
 function pageTitle(){
   const map = {dashboard:"Dashboard", fees:"Fees", results:"My Results", resultsEntry:"Enter Results",
     tests:"Tests & Exams", notes:"Notes", library:"Library", voting:"E-Voting", groups:"Chat Groups", issues:"Report an Issue",
@@ -668,9 +723,9 @@ function studentDashboard(){
   <div class="grid g2">
     <div class="card">
       <div class="panel-title"><h3>Recent results</h3><span class="small-note" onclick="STATE.page='results';render()" style="cursor:pointer;text-decoration:underline;">view all</span></div>
-      ${myResults.length? `<table><thead><tr><th>Subject</th><th>Term</th><th>Score</th><th>Grade</th></tr></thead><tbody>
+      ${myResults.length? `<div class="table-scroll"><table><thead><tr><th>Subject</th><th>Term</th><th>Score</th><th>Grade</th></tr></thead><tbody>
         ${myResults.slice(0,4).map(r=>`<tr><td>${esc(r.subject)}</td><td>${r.term}</td><td class="mono">${r.score}%</td><td><span class="badge-grade">${grade(r.score)}</span></td></tr>`).join("")}
-      </tbody></table>` : `<div class="empty"><div class="big">📄</div>No results published yet.</div>`}
+      </tbody></table></div>` : `<div class="empty"><div class="big">📄</div>No results published yet.</div>`}
     </div>
     <div class="card">
       <div class="panel-title"><h3>Notice board</h3></div>
@@ -743,9 +798,9 @@ function adminDashboard(){
   <div class="grid g2" style="margin-bottom:20px;">
     <div class="card">
       <div class="panel-title"><h3>Class fee structure</h3></div>
-      <table><thead><tr><th>Class</th><th>Term Fee</th><th>Students</th></tr></thead><tbody>
+      <div class="table-scroll"><table><thead><tr><th>Class</th><th>Term Fee</th><th>Students</th></tr></thead><tbody>
         ${CLASSES.map(c=>`<tr><td>${c}</td><td class="mono">${ugx(STATE.feesStructure[c])}</td><td>${STATE.students.filter(s=>s.cls===c && s.status!=="pending").length}</td></tr>`).join("")}
-      </tbody></table>
+      </tbody></table></div>
     </div>
     <div class="card">
       <div class="panel-title"><h3>Teacher payments</h3><span class="small-note">${paidTeachers.length} paid · ${unpaidTeachers.length} still demanding</span></div>
@@ -753,7 +808,7 @@ function adminDashboard(){
       <div style="margin-bottom:10px;">
         <div class="small-note" style="font-weight:600;margin-bottom:6px;">Still demanding payment</div>
         ${unpaidTeachers.length===0? `<div class="small-note">None — everyone is paid up. ✅</div>` :
-        unpaidTeachers.map(t=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px dotted var(--line);">
+        unpaidTeachers.map(t=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px dotted var(--line);flex-wrap:wrap;gap:6px;">
           <span>${esc(t.name)} <span class="small-note">(${esc(t.subjects.join(", "))})</span></span>
           <button class="btn btn-primary btn-sm" onclick="toggleTeacherPaid('${t.id}')">Mark as paid</button>
         </div>`).join("")}
@@ -761,7 +816,7 @@ function adminDashboard(){
       <div>
         <div class="small-note" style="font-weight:600;margin-bottom:6px;">Paid</div>
         ${paidTeachers.length===0? `<div class="small-note">No teachers marked paid yet.</div>` :
-        paidTeachers.map(t=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px dotted var(--line);">
+        paidTeachers.map(t=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px dotted var(--line);flex-wrap:wrap;gap:6px;">
           <span>${esc(t.name)} <span class="tag tag-resolved">Paid</span></span>
           <button class="btn btn-ghost btn-sm" onclick="toggleTeacherPaid('${t.id}')">Mark as unpaid</button>
         </div>`).join("")}
@@ -796,24 +851,24 @@ function studentFees(){
   </div>
   <div class="card">
     <div class="panel-title"><h3>Payment history</h3></div>
-    ${history.length? `<table><thead><tr><th>Date</th><th>Method</th><th>Amount</th></tr></thead><tbody>
+    ${history.length? `<div class="table-scroll"><table><thead><tr><th>Date</th><th>Method</th><th>Amount</th></tr></thead><tbody>
       ${history.map(p=>`<tr><td>${p.date}</td><td>${esc(p.method)}</td><td class="mono">${ugx(p.amount)}</td></tr>`).join("")}
-    </tbody></table>` : `<div class="empty"><div class="big">🧾</div>No payments recorded yet.</div>`}
+    </tbody></table></div>` : `<div class="empty"><div class="big">🧾</div>No payments recorded yet.</div>`}
   </div>`;
 }
 function adminFees(){
   return `
   <div class="card" style="margin-bottom:20px;">
     <div class="panel-title"><h3>Set term fees per class</h3></div>
-    <table><thead><tr><th>Class</th><th>Current Term Fee (UGX)</th><th></th></tr></thead><tbody>
+    <div class="table-scroll"><table><thead><tr><th>Class</th><th>Current Term Fee (UGX)</th><th></th></tr></thead><tbody>
       ${CLASSES.map(c=>`<tr><td>${c}</td>
         <td><input id="feeInput-${c}" class="mono" style="max-width:180px;padding:7px 10px;border:1px solid var(--line);border-radius:4px;" type="number" value="${STATE.feesStructure[c]}"></td>
         <td><button class="btn btn-gold btn-sm" onclick="saveFee('${c}')">Save</button></td></tr>`).join("")}
-    </tbody></table>
+    </tbody></table></div>
   </div>
   <div class="card">
     <div class="panel-title"><h3>Student balances &amp; record payment</h3></div>
-    <table><thead><tr><th>Student</th><th>Class</th><th>Total</th><th>Paid</th><th>Balance</th><th>Record payment</th></tr></thead><tbody>
+    <div class="table-scroll"><table><thead><tr><th>Student</th><th>Class</th><th>Total</th><th>Paid</th><th>Balance</th><th>Record payment</th></tr></thead><tbody>
       ${STATE.students.filter(s=>s.status!=="pending").map(s=>{
         const {total,paid,balance} = studentBalance(s);
         return `<tr><td>${esc(s.name)}</td><td>${s.cls}</td><td class="mono">${ugx(total)}</td><td class="mono">${ugx(paid)}</td>
@@ -823,7 +878,7 @@ function adminFees(){
           <button class="btn btn-primary btn-sm" onclick="recordPayment('${s.id}')">Add</button>
         </td></tr>`;
       }).join("")}
-    </tbody></table>
+    </tbody></table></div>
   </div>`;
 }
 async function saveFee(cls){
@@ -853,9 +908,9 @@ function studentResults(){
     terms.map(term=>`
     <div class="card" style="margin-bottom:16px;">
       <div class="panel-title"><h3>${term}</h3></div>
-      <table><thead><tr><th>Subject</th><th>Type</th><th>Score</th><th>Grade</th></tr></thead><tbody>
+      <div class="table-scroll"><table><thead><tr><th>Subject</th><th>Type</th><th>Score</th><th>Grade</th></tr></thead><tbody>
         ${mine.filter(r=>r.term===term).map(r=>`<tr><td>${esc(r.subject)}</td><td>${esc(r.type)}</td><td class="mono">${r.score}%</td><td><span class="badge-grade">${grade(r.score)}</span></td></tr>`).join("")}
-      </tbody></table>
+      </tbody></table></div>
     </div>`).join("")}`;
 }
 function teacherResultsEntry(){
@@ -881,12 +936,12 @@ function loadResultsRoster(){
   box.innerHTML = `
   <div class="card">
     <div class="panel-title"><h3>${esc(subject)} — ${cls} — ${term}</h3></div>
-    <table><thead><tr><th>Student</th><th>Score (%)</th></tr></thead><tbody>
+    <div class="table-scroll"><table><thead><tr><th>Student</th><th>Score (%)</th></tr></thead><tbody>
       ${roster.map(s=>{
         const existing = STATE.results.find(r=>r.studentId===s.id && r.subject===subject && r.term===term);
         return `<tr><td>${esc(s.name)}</td><td><input id="score-${s.id}" type="number" min="0" max="100" value="${existing?existing.score:''}" style="width:100px;padding:7px 9px;border:1px solid var(--line);border-radius:4px;"></td></tr>`;
       }).join("")}
-    </tbody></table>
+    </tbody></table></div>
     <div style="margin-top:14px;"><button class="btn btn-gold" onclick="saveResults('${cls}','${subject.replace(/'/g,"\\'")}','${term}')">Save results</button></div>
   </div>`;
 }
@@ -920,7 +975,7 @@ function studentTests(){
   <div class="card">
     <div class="panel-title"><h3>Available tests for ${s.cls}</h3></div>
     ${available.length===0? `<div class="empty"><div class="big">📝</div>No tests currently open for your class.</div>` :
-    `<table><thead><tr><th>Title</th><th>Subject</th><th>Type</th><th>Duration</th><th>Status</th><th></th></tr></thead><tbody>
+    `<div class="table-scroll"><table><thead><tr><th>Title</th><th>Subject</th><th>Type</th><th>Duration</th><th>Status</th><th></th></tr></thead><tbody>
       ${available.map(t=>{
         const sub = mySubs.find(x=>x.testId===t.id);
         const lateOk = !!lp[t.id+"|"+s.id];
@@ -942,7 +997,7 @@ function studentTests(){
         return `<tr><td>${esc(t.title)}</td><td>${esc(t.subject)}</td><td>${t.type==='paper'?'Paper':'Objective'}</td><td>${t.duration} min</td>
         <td>${statusCell}</td><td>${actionCell}</td></tr>`;
       }).join("")}
-    </tbody></table>`}
+    </tbody></table></div>`}
   </div>`;
 }
 function downloadTestPaper(id){
@@ -1097,7 +1152,7 @@ function renderTeacherTestRow(x){
       </div>
     </div>
     ${expanded? `
-    <table style="margin-top:10px;"><thead><tr><th>Student</th><th>Status</th><th></th></tr></thead><tbody>
+    <div class="table-scroll"><table style="margin-top:10px;"><thead><tr><th>Student</th><th>Status</th><th></th></tr></thead><tbody>
       ${roster.map(s=>{
         const sub = subs.find(su=>su.studentId===s.id);
         const lateKey = x.id+"|"+s.id;
@@ -1106,7 +1161,7 @@ function renderTeacherTestRow(x){
         <td>${sub? `<span class="tag tag-resolved">Submitted · ${sub.score}/${sub.total}</span>` : lateAllowed? `<span class="tag tag-progress">Late submission allowed</span>` : `<span class="tag tag-open">Not submitted</span>`}</td>
         <td>${(!sub && x.type==='objective')? `<button class="btn btn-ghost btn-sm" onclick="toggleLate('${x.id}','${s.id}')">${lateAllowed?'Revoke late permission':'Allow late submission'}</button>` : ""}</td></tr>`;
       }).join("")}
-    </tbody></table>` : ""}
+    </tbody></table></div>` : ""}
   </div>`;
 }
 async function toggleActiveTest(id){
@@ -1189,7 +1244,7 @@ function studentNotes(){
     <div class="card" style="margin-bottom:16px;">
       <div class="panel-title"><h3>${esc(sub)}</h3></div>
       ${bySubject[sub].map(n=>`
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px dotted var(--line);">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px dotted var(--line);flex-wrap:wrap;gap:8px;">
           <div><div style="font-weight:600;">${esc(n.title)} ${n.fileData?`<span class="tag tag-progress">📎 ${esc(n.fileName||'file')}</span>`:''}</div><div class="small-note">${esc(findTeacher(n.teacherId)?.name||'Teacher')} · ${n.date}</div></div>
           <button class="btn btn-primary btn-sm" onclick="downloadNote('${n.id}')">Download</button>
         </div>`).join("")}
@@ -1232,10 +1287,10 @@ function teacherNotes(){
   <div class="card">
     <div class="panel-title"><h3>My uploads</h3></div>
     ${mine.length===0? `<div class="empty"><div class="big">📁</div>No notes uploaded yet.</div>` :
-    `<table><thead><tr><th>Title</th><th>Subject</th><th>Class</th><th>Date</th><th></th></tr></thead><tbody>
+    `<div class="table-scroll"><table><thead><tr><th>Title</th><th>Subject</th><th>Class</th><th>Date</th><th></th></tr></thead><tbody>
       ${mine.map(n=>`<tr><td>${esc(n.title)}</td><td>${esc(n.subject)}</td><td>${n.cls}</td><td>${n.date}</td>
       <td><button class="btn btn-ghost btn-sm" onclick="deleteNote('${n.id}')">Remove</button></td></tr>`).join("")}
-    </tbody></table>`}
+    </tbody></table></div>`}
   </div>`;
 }
 async function saveNote(){
@@ -1535,11 +1590,11 @@ function issuesPage(){
     <div class="card">
       <div class="panel-title"><h3>All reported issues</h3></div>
       ${STATE.issues.length===0? `<div class="empty"><div class="big">✅</div>No issues reported.</div>` :
-      `<table><thead><tr><th>Reported by</th><th>Category</th><th>Title</th><th>Date</th><th>Status</th><th></th></tr></thead><tbody>
+      `<div class="table-scroll"><table><thead><tr><th>Reported by</th><th>Category</th><th>Title</th><th>Date</th><th>Status</th><th></th></tr></thead><tbody>
         ${STATE.issues.map(i=>`<tr><td>${esc(nameOf(i.by))} <span class="small-note">(${i.role})</span></td><td>${esc(i.category)}</td><td>${esc(i.title)}</td><td>${i.date}</td>
         <td><span class="tag ${i.status==='Resolved'?'tag-resolved':i.status==='In Progress'?'tag-progress':'tag-open'}">${i.status}</span></td>
         <td>${i.status!=="Resolved"? `<button class="btn btn-ghost btn-sm" onclick="advanceIssue('${i.id}')">${i.status==='Open'?'Mark in progress':'Mark resolved'}</button>`:""}</td></tr>`).join("")}
-      </tbody></table>`}
+      </tbody></table></div>`}
     </div>`;
   }
   const mine = STATE.issues.filter(i=>i.by===u.id);
@@ -1556,9 +1611,9 @@ function issuesPage(){
   <div class="card">
     <div class="panel-title"><h3>My reports</h3></div>
     ${mine.length===0? `<div class="empty"><div class="big">🗒️</div>You haven't reported anything yet.</div>` :
-    `<table><thead><tr><th>Title</th><th>Category</th><th>Date</th><th>Status</th></tr></thead><tbody>
+    `<div class="table-scroll"><table><thead><tr><th>Title</th><th>Category</th><th>Date</th><th>Status</th></tr></thead><tbody>
       ${mine.map(i=>`<tr><td>${esc(i.title)}</td><td>${esc(i.category)}</td><td>${i.date}</td><td><span class="tag ${i.status==='Resolved'?'tag-resolved':i.status==='In Progress'?'tag-progress':'tag-open'}">${i.status}</span></td></tr>`).join("")}
-    </tbody></table>`}
+    </tbody></table></div>`}
   </div>`;
 }
 function nameOf(id){ return (findStudent(id)||findTeacher(id)||{name:"Unknown"}).name; }
@@ -1589,11 +1644,11 @@ function adminStudents(){
   ${pending.length>0? `
   <div class="card" style="margin-bottom:20px;border-left:3px solid var(--gold);">
     <div class="panel-title"><h3>Pending student registrations (${pending.length})</h3></div>
-    <table><thead><tr><th>Name</th><th>Class</th><th>Adm No.</th><th></th></tr></thead><tbody>
+    <div class="table-scroll"><table><thead><tr><th>Name</th><th>Class</th><th>Adm No.</th><th></th></tr></thead><tbody>
       ${pending.map(s=>`<tr><td>${esc(s.name)}</td><td>${s.cls}</td><td class="mono">${esc(s.adm)}</td>
       <td style="display:flex;gap:6px;"><button class="btn btn-primary btn-sm" onclick="approveStudent('${s.id}')">Approve</button>
       <button class="btn btn-ghost btn-sm" style="border-color:var(--danger);color:var(--danger);" onclick="rejectStudent('${s.id}')">Reject</button></td></tr>`).join("")}
-    </tbody></table>
+    </tbody></table></div>
   </div>` : ""}
   <div class="card" style="margin-bottom:20px;">
     <div class="panel-title"><h3>Admit a new student</h3></div>
@@ -1615,9 +1670,9 @@ function adminStudents(){
   </div>
   <div class="card">
     <div class="panel-title"><h3>All students (${approved.length})</h3></div>
-    <table><thead><tr><th>Name</th><th>Class</th><th>Adm No.</th><th>Balance</th><th></th></tr></thead><tbody>
+    <div class="table-scroll"><table><thead><tr><th>Name</th><th>Class</th><th>Adm No.</th><th>Balance</th><th></th></tr></thead><tbody>
       ${approved.map(s=>{const {balance}=studentBalance(s); return `<tr><td>${esc(s.name)}</td><td>${s.cls}</td><td class="mono">${esc(s.adm)}</td><td class="mono" style="color:${balance>0?'var(--danger)':'var(--success)'};">${ugx(balance)}</td><td><button class="btn btn-ghost btn-sm" style="border-color:var(--danger);color:var(--danger);" onclick="deleteStudent('${s.id}')">Delete</button></td></tr>`;}).join("")}
-    </tbody></table>
+    </tbody></table></div>
   </div>`;
 }
 async function approveStudent(id){
@@ -1676,11 +1731,11 @@ function adminTeachers(){
   ${pending.length>0? `
   <div class="card" style="margin-bottom:20px;border-left:3px solid var(--gold);">
     <div class="panel-title"><h3>Pending teacher registrations (${pending.length})</h3></div>
-    <table><thead><tr><th>Name</th><th>Subjects</th><th>Classes</th><th></th></tr></thead><tbody>
+    <div class="table-scroll"><table><thead><tr><th>Name</th><th>Subjects</th><th>Classes</th><th></th></tr></thead><tbody>
       ${pending.map(t=>`<tr><td>${esc(t.name)}</td><td>${esc(t.subjects.join(", "))}</td><td>${esc(t.classes.join(", "))}</td>
       <td style="display:flex;gap:6px;"><button class="btn btn-primary btn-sm" onclick="approveTeacher('${t.id}')">Approve</button>
       <button class="btn btn-ghost btn-sm" style="border-color:var(--danger);color:var(--danger);" onclick="rejectTeacher('${t.id}')">Reject</button></td></tr>`).join("")}
-    </tbody></table>
+    </tbody></table></div>
   </div>` : ""}
   <div class="card" style="margin-bottom:20px;">
     <div class="panel-title"><h3>Add a new teacher</h3></div>
@@ -1707,9 +1762,9 @@ function adminTeachers(){
   </div>
   <div class="card">
     <div class="panel-title"><h3>All teachers (${approved.length})</h3></div>
-    <table><thead><tr><th>Name</th><th>Subjects</th><th>Classes</th></tr></thead><tbody>
+    <div class="table-scroll"><table><thead><tr><th>Name</th><th>Subjects</th><th>Classes</th></tr></thead><tbody>
       ${approved.map(t=>`<tr><td>${esc(t.name)}</td><td>${esc(t.subjects.join(", "))}</td><td>${esc(t.classes.join(", "))}</td></tr>`).join("")}
-    </tbody></table>
+    </tbody></table></div>
   </div>`;
 }
 function genTchPass(){
@@ -1774,9 +1829,9 @@ function settingsPage(){
   ${role==="admin"? `
   <div class="card" style="margin-top:16px;">
     <div class="panel-title"><h3>Administrator accounts</h3></div>
-    <table><thead><tr><th>Name</th></tr></thead><tbody>
+    <div class="table-scroll"><table><thead><tr><th>Name</th></tr></thead><tbody>
       ${STATE.admins.map(a=>`<tr><td>${esc(a.name)}</td></tr>`).join("")}
-    </tbody></table>
+    </tbody></table></div>
     <div class="form-row two" style="margin-top:14px;">
       <div class="f"><label>New administrator name</label><input id="newAdmName" placeholder="e.g. Mr. Albert"></div>
       <div class="f"><label>Temporary password</label><input id="newAdmPass" type="password" placeholder="At least 4 characters"></div>
