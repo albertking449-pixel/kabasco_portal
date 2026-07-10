@@ -1,0 +1,14 @@
+name = "kabasco-portal-api"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+# Allowed origins for the portal front-end (edit to match where you host index.html).
+# You can also just leave "*" while testing.
+[vars]
+ALLOWED_ORIGIN = "*"
+
+# D1 database binding — the code accesses it as `env.db`
+[[d1_databases]]
+binding = "db"
+database_name = "kabasco_portal"
+database_id = "REPLACE-WITH-YOUR-DATABASE-ID"
