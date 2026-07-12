@@ -8,8 +8,7 @@ compatibility_date = "2024-11-01"
 ALLOWED_ORIGIN = "*"
 
 # D1 database binding — the code accesses it as `env.db`
-"d1_databases": [{
-    "binding": "DB",
-    "database_name": "kabasco_portal",
-    "database_id": "b3d262c3-aa10-496b-abaf-a57f086af050"
- }]
+[[d1_databases]]
+binding = "kabasco_portal"
+database_name = "kabasco_portal"
+database_id = "b3d262c3-aa10-496b-abaf-a57f086af050"
